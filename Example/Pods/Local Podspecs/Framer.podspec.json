@@ -1,9 +1,9 @@
 {
   "name": "Framer",
   "version": "0.1.0",
-  "summary": "A short description of Framer.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/<GITHUB_USERNAME>/Framer",
+  "summary": "Comfortable syntax for working with frames",
+  "description": "This CocoaPod provides an exellent blocks syntax for working with frames.\nFramer is a good framework which wraps working with frames with a nice chaining syntax.",
+  "homepage": "https://github.com/Otbivnoe/Framer",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,12 @@
     "Nikita Ermolenko": "nikita.ermolenko@rosberry.com"
   },
   "source": {
-    "git": "https://github.com/<GITHUB_USERNAME>/Framer.git",
+    "git": "https://github.com/Otbivnoe/Framer.git",
     "tag": "0.1.0"
   },
+  "requires_arc": true,
   "platforms": {
     "ios": "8.0"
   },
-  "source_files": "Framer/Classes/**/*"
+  "source_files": "Framer/Classes/*.{h,m}"
 }
