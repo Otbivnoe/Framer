@@ -25,10 +25,10 @@
 
 - (NUIFramer *(^)(UIEdgeInsets))insets;
 
-- (NUIFramer *(^)(UIView *, CGFloat inset))left_to;
-- (NUIFramer *(^)(UIView *, CGFloat inset))right_to;
-- (NUIFramer *(^)(UIView *, CGFloat inset))top_to;
-- (NUIFramer *(^)(UIView *, CGFloat inset))bottom_to;
+- (NUIFramer *(^)(UIView *, CGFloat))left_to;
+- (NUIFramer *(^)(UIView *, CGFloat))right_to;
+- (NUIFramer *(^)(UIView *, CGFloat))top_to;
+- (NUIFramer *(^)(UIView *, CGFloat))bottom_to;
 
 - (NUIFramer *(^)(UIView *, CGFloat))centerX_to;
 - (NUIFramer *(^)(UIView *, CGFloat))centerY_to;
