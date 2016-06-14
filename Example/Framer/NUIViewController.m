@@ -86,6 +86,7 @@
         framer.bottom_to(self.label1, 40);
     }];
     
+    NSLog(@"");
 
     
     //    [self.view3 installFrames:^(NUIFramer *framer) {

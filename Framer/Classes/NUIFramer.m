@@ -13,6 +13,8 @@
 @interface NUIFramer ()
 
 @property (nonatomic) NSMutableArray <NUIHandler *> *handlers;
+@property (nonatomic) CGRect newRect;
+@property (nonatomic) CGPoint newCenter;
 
 @end
 
@@ -46,9 +48,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.view.frame;
+            CGRect frame = strongSelf.newRect;
             frame.origin.x = x;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
@@ -63,9 +65,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.view.frame;
+            CGRect frame = strongSelf.newRect;
             frame.origin.y = y;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
@@ -82,9 +84,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.view.frame;
+            CGRect frame = strongSelf.newRect;
             frame.size.width = width;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
@@ -99,9 +101,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.view.frame;
+            CGRect frame = strongSelf.newRect;
             frame.size.height = height;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
@@ -116,10 +118,10 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.view.frame;
-            CGFloat height = CGRectGetHeight(strongSelf.view.superview.bounds) - (CGRectGetMinY(strongSelf.view.frame) + bottom);
+            CGRect frame = strongSelf.newRect;
+            CGFloat height = CGRectGetHeight(strongSelf.view.superview.bounds) - (CGRectGetMinY(strongSelf.newRect) + bottom);
             frame.size.height = height;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
@@ -137,7 +139,7 @@
             CGFloat width = CGRectGetWidth(strongSelf.view.superview.bounds) - (insets.left + insets.right);
             CGFloat height = CGRectGetHeight(strongSelf.view.superview.bounds) - (insets.top + insets.bottom);
             CGRect frame = CGRectMake(insets.left, insets.top, width, height);
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
@@ -153,9 +155,9 @@
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             CGFloat x =  CGRectGetMaxX(view.frame) + inset;
-            CGRect frame = strongSelf.view.frame;
+            CGRect frame = strongSelf.newRect;
             frame.origin.x = x;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
@@ -170,10 +172,10 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat x =  CGRectGetMinX(view.frame) - inset - CGRectGetWidth(strongSelf.view.bounds);
-            CGRect frame = strongSelf.view.frame;
+            CGFloat x =  CGRectGetMinX(view.frame) - inset - CGRectGetWidth(strongSelf.newRect);
+            CGRect frame = strongSelf.newRect;
             frame.origin.x = x;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
@@ -190,10 +192,10 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.view.frame;
-            CGFloat width = CGRectGetWidth(strongSelf.view.superview.bounds) - (CGRectGetMinX(strongSelf.view.frame) + inset);
+            CGRect frame = strongSelf.newRect;
+            CGFloat width = CGRectGetWidth(strongSelf.view.superview.bounds) - (CGRectGetMinX(strongSelf.newRect) + inset);
             frame.size.width = width;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
@@ -209,9 +211,9 @@
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             CGFloat y =  CGRectGetMaxY(view.frame) + inset;
-            CGRect frame = strongSelf.view.frame;
+            CGRect frame = strongSelf.newRect;
             frame.origin.y = y;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
@@ -226,10 +228,10 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat y =  CGRectGetMinY(view.frame) - inset - CGRectGetHeight(strongSelf.view.frame);
-            CGRect frame = strongSelf.view.frame;
+            CGFloat y =  CGRectGetMinY(view.frame) - inset - CGRectGetHeight(strongSelf.newRect);
+            CGRect frame = strongSelf.newRect;
             frame.origin.y = y;
-            strongSelf.view.frame = frame;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
@@ -244,9 +246,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGPoint center = CGPointMake(view.center.x, strongSelf.view.center.y);
-            center.x += inset;
-            strongSelf.view.center = center;
+            CGPoint center = CGPointMake(view.center.x, strongSelf.newCenter.y);
+            center.y += inset;
+            strongSelf.newCenter = center;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
@@ -261,9 +263,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGPoint center = CGPointMake(strongSelf.view.center.x, view.center.y);
+            CGPoint center = CGPointMake(strongSelf.newCenter.x, view.center.y);
             center.y += inset;
-            strongSelf.view.center = center;
+            strongSelf.newCenter = center;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
@@ -286,6 +288,18 @@
 
 #pragma mark - Configurate methods
 
+- (void)startConfigurate {
+    
+    self.newRect = self.view.frame;
+    self.newCenter = self.view.center;
+}
+
+- (void)endConfigurate {
+    
+    self.view.frame = self.newRect;
+    self.view.center = self.newCenter;
+}
+
 - (void)configurateOrderHandlers {
     
     [self.handlers sortUsingComparator:^NSComparisonResult(NUIHandler * _Nonnull handler1, NUIHandler *handler2) {
@@ -307,6 +321,8 @@
     [self.handlers enumerateObjectsUsingBlock:^(NUIHandler * _Nonnull handler, NSUInteger idx, BOOL * _Nonnull stop) {
         handler.handlerBlock();
     }];
+    
+    [self endConfigurate];
 }
 
 @end

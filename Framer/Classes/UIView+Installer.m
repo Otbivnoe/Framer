@@ -20,6 +20,8 @@
     NUIFramer *framer = [[NUIFramer alloc] init];
     framer.view = self;
     
+    [framer startConfigurate];
+    
     if (installerBlock) {
         installerBlock(framer);
     }
