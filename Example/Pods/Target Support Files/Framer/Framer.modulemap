@@ -1,0 +1,6 @@
+framework module Framer {
+  umbrella header "Framer-umbrella.h"
+
+  export *
+  module * { export * }
+}

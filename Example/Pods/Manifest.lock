@@ -1,0 +1,19 @@
+PODS:
+  - Framer (0.1.0)
+  - Kiwi (2.4.0)
+
+DEPENDENCIES:
+  - Framer (from `../`)
+  - Kiwi
+
+EXTERNAL SOURCES:
+  Framer:
+    :path: ../
+
+SPEC CHECKSUMS:
+  Framer: bd5bfbad8d5df86384253d9e2dc9505a8db2bf58
+  Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
+
+PODFILE CHECKSUM: 2ffd542d4d675ad907375d57aa035f8c760b029d
+
+COCOAPODS: 1.0.0
