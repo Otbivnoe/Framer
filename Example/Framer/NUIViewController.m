@@ -53,18 +53,36 @@
     
     
     
-    //    self.view3 = [[UIView alloc] init];
-    //    self.view3.backgroundColor = [UIColor yellowColor];
-    //    [self.view addSubview:self.view3];
-    //
-    //    self.view1 = [[UIView alloc] init];
-    //    self.view1.backgroundColor = [UIColor redColor];
-    //    [self.view3 addSubview:self.view1];
-    //
-    //    self.view2 = [[UIView alloc] init];
-    //    self.view2.backgroundColor = [UIColor greenColor];
-    //    [self.view3 addSubview:self.view2];
+//        self.view3 = [[UIView alloc] init];
+//        self.view3.backgroundColor = [UIColor yellowColor];
+//        [self.view addSubview:self.view3];
     
+//        self.view1 = [[UIView alloc] init];
+//        self.view1.backgroundColor = [UIColor redColor];
+//        [self.view3 addSubview:self.view1];
+//    
+//        self.view2 = [[UIView alloc] init];
+//        self.view2.backgroundColor = [UIColor greenColor];
+//        [self.view3 addSubview:self.view2];
+    
+    
+    
+    
+//    [self.view3 installFrames:^(NUIFramer *framer) {
+//        framer.super_centerX(0);
+//        framer.super_centerY(0);
+//        framer.width(100).and.height(100);
+//    }];
+//    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//        [UIView animateWithDuration:1.0f animations:^{
+//            [self.view3 installFrames:^(NUIFramer *framer) {
+//                framer.super_centerX(100);
+//                framer.super_centerY(100);
+//                framer.width(50).and.height(50);
+//            }];
+//        }];
+//    });
 }
 
 - (void)dealloc {
@@ -76,33 +94,32 @@
     
     [super viewDidLayoutSubviews];
     
-    [self.label1 installFrames:^(NUIFramer *framer) {
-        framer.super_centerX(0);
-        framer.super_centerY(0);
-    }];
+//    [self.label1 installFrames:^(NUIFramer *framer) {
+//        framer.super_centerX(0);
+//        framer.super_centerY(0);
+//    }];
+//    
+//    [self.label2 installFrames:^(NUIFramer *framer) {
+//        framer.super_centerX(0);
+//        framer.bottom_to(self.label1, 40);
+//    }];
     
-    [self.label2 installFrames:^(NUIFramer *framer) {
-        framer.super_centerX(0);
-        framer.bottom_to(self.label1, 40);
-    }];
-    
-    NSLog(@"");
 
     
-    //    [self.view3 installFrames:^(NUIFramer *framer) {
-    //        framer.super_centerY(0);
-    //        framer.super_centerX(0);
-    //        framer.height(200).width(200);
-    //    }];
-    //
-    //    [self.view1 installFrames:^(NUIFramer *framer) {
-    //        framer.left(10).top(10).bottom(10);
-    //        framer.width(100);
-    //    }];
-    //
-    //    [self.view2 installFrames:^(NUIFramer *framer) {
-    //        framer.top(0).right(0).bottom(0).left_to(self.view1, 0);
-    //    }];
+//        [self.view3 installFrames:^(NUIFramer *framer) {
+//            framer.super_centerY(0);
+//            framer.super_centerX(0);
+//            framer.height(200).width(200);
+//        }];
+//    
+//        [self.view1 installFrames:^(NUIFramer *framer) {
+//            framer.left(10).top(10).bottom(10);
+//            framer.width(100);
+//        }];
+//    
+//        [self.view2 installFrames:^(NUIFramer *framer) {
+//            framer.top(0).right(0).bottom(0).left_to(self.view1, 0);
+//        }];
     
     
     

@@ -36,10 +36,9 @@
 - (NUIFramer *(^)(CGFloat))super_centerX;
 - (NUIFramer *(^)(CGFloat))super_centerY;
 
-- (void)startConfigurate;
-- (void)configurateOrderHandlers;
-- (void)configurateFrames;
+- (NUIFramer *)and;
 
-//TODO GLOBAL CGRECT
+- (void)startConfigurate;
+- (void)configurateFrames;
 
 @end

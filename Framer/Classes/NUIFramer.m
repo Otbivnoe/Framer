@@ -14,7 +14,6 @@
 
 @property (nonatomic) NSMutableArray <NUIHandler *> *handlers;
 @property (nonatomic) CGRect newRect;
-@property (nonatomic) CGPoint newCenter;
 
 @end
 
@@ -37,6 +36,10 @@
 }
 
 #pragma mark - Configurate
+
+- (NUIFramer *)and {
+    return self;
+}
 
 #pragma mark Top priority 
 
@@ -246,9 +249,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGPoint center = CGPointMake(view.center.x, strongSelf.newCenter.y);
-            center.y += inset;
-            strongSelf.newCenter = center;
+            CGRect frame = strongSelf.newRect;
+            frame.origin.x = (view.center.x - CGRectGetWidth(frame) / 2) + inset;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
@@ -263,9 +266,9 @@
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGPoint center = CGPointMake(strongSelf.newCenter.x, view.center.y);
-            center.y += inset;
-            strongSelf.newCenter = center;
+            CGRect frame = strongSelf.newRect;
+            frame.origin.y = (view.center.y - CGRectGetHeight(frame) / 2) + inset;
+            strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
@@ -291,13 +294,11 @@
 - (void)startConfigurate {
     
     self.newRect = self.view.frame;
-    self.newCenter = self.view.center;
 }
 
 - (void)endConfigurate {
     
     self.view.frame = self.newRect;
-    self.view.center = self.newCenter;
 }
 
 - (void)configurateOrderHandlers {
@@ -317,6 +318,8 @@
             [obj additionalConfigurateForFramer:self];
         }
     }];
+    
+    [self configurateOrderHandlers];
     
     [self.handlers enumerateObjectsUsingBlock:^(NUIHandler * _Nonnull handler, NSUInteger idx, BOOL * _Nonnull stop) {
         handler.handlerBlock();

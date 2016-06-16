@@ -25,7 +25,6 @@
     if (installerBlock) {
         installerBlock(framer);
     }
-    [framer configurateOrderHandlers];
     [framer configurateFrames];
 }
 
