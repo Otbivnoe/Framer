@@ -17,15 +17,7 @@
 
 - (void)installFrames:(void(^)(NUIFramer *framer))installerBlock {
     
-    NUIFramer *framer = [[NUIFramer alloc] init];
-    framer.view = self;
-    
-    [framer startConfigurate];
-    
-    if (installerBlock) {
-        installerBlock(framer);
-    }
-    [framer configurateFrames];
+    [NUIFramer configurateView:self withInstallerBlock:installerBlock];
 }
 
 @end

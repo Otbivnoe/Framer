@@ -35,7 +35,60 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
-#pragma mark - Configurate
+#pragma mark - Configurate methods
+
++ (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock {
+    
+    NUIFramer *framer = [[NUIFramer alloc] init];
+    framer.view = view;
+    
+    [framer startConfigurate];
+    
+    if (installerBlock) {
+        installerBlock(framer);
+    }
+    [framer configurateFrames];
+}
+
+
+- (void)startConfigurate {
+    
+    self.newRect = self.view.frame;
+}
+
+- (void)endConfigurate {
+    
+    self.view.frame = self.newRect;
+}
+
+- (void)configurateOrderHandlers {
+    
+    [self.handlers sortUsingComparator:^NSComparisonResult(NUIHandler * _Nonnull handler1, NUIHandler *handler2) {
+        if (handler1.priority > handler2.priority) {
+            return NSOrderedAscending;
+        }
+        return (handler1.priority == handler2.priority) ? NSOrderedSame : NSOrderedDescending;
+    }];
+}
+
+- (void)configurateFrames {
+    
+    [[NUIAdditionalConfigurateFactory additionalConfigurates] enumerateObjectsUsingBlock:^(id<NUIConfigurateProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if ([self.view isKindOfClass:obj.class]) {
+            [obj additionalConfigurateForFramer:self];
+        }
+    }];
+    
+    [self configurateOrderHandlers];
+    
+    [self.handlers enumerateObjectsUsingBlock:^(NUIHandler * _Nonnull handler, NSUInteger idx, BOOL * _Nonnull stop) {
+        handler.handlerBlock();
+    }];
+    
+    [self endConfigurate];
+}
+
+#pragma mark - Framer methods
 
 - (NUIFramer *)and {
     return self;
@@ -287,45 +340,6 @@
     return ^id(CGFloat inset) {
         return self.centerY_to(self.view.superview, inset);
     };
-}
-
-#pragma mark - Configurate methods
-
-- (void)startConfigurate {
-    
-    self.newRect = self.view.frame;
-}
-
-- (void)endConfigurate {
-    
-    self.view.frame = self.newRect;
-}
-
-- (void)configurateOrderHandlers {
-    
-    [self.handlers sortUsingComparator:^NSComparisonResult(NUIHandler * _Nonnull handler1, NUIHandler *handler2) {
-        if (handler1.priority > handler2.priority) {
-            return NSOrderedAscending;
-        }
-        return (handler1.priority == handler2.priority) ? NSOrderedSame : NSOrderedDescending;
-    }];
-}
-
-- (void)configurateFrames {
-
-    [[NUIAdditionalConfigurateFactory additionalConfigurates] enumerateObjectsUsingBlock:^(id<NUIConfigurateProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([self.view isKindOfClass:obj.class]) {
-            [obj additionalConfigurateForFramer:self];
-        }
-    }];
-    
-    [self configurateOrderHandlers];
-    
-    [self.handlers enumerateObjectsUsingBlock:^(NUIHandler * _Nonnull handler, NSUInteger idx, BOOL * _Nonnull stop) {
-        handler.handlerBlock();
-    }];
-    
-    [self endConfigurate];
 }
 
 @end

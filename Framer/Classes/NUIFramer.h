@@ -6,14 +6,13 @@
 //  Copyright © 2016 Nikita Ermolenko. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-
-#import "UIView+Installer.h"
 
 @interface NUIFramer : NSObject
 
 @property (nonatomic, weak) UIView *view;
+
++ (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock;
 
 - (NUIFramer *(^)(CGFloat))width;
 - (NUIFramer *(^)(CGFloat))height;
@@ -37,8 +36,5 @@
 - (NUIFramer *(^)(CGFloat))super_centerY;
 
 - (NUIFramer *)and;
-
-- (void)startConfigurate;
-- (void)configurateFrames;
 
 @end
