@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Framer'
-  s.version          = '0.1.0'
+  s.version          = '0.2.0'
   s.summary          = 'Comfortable syntax for working with frames'
   s.description      = <<-DESC
 This CocoaPod provides an exellent blocks syntax for working with frames.
