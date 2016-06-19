@@ -1,6 +1,6 @@
 {
   "name": "Framer",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "summary": "Comfortable syntax for working with frames",
   "description": "This CocoaPod provides an exellent blocks syntax for working with frames.\nFramer is a good framework which wraps working with frames with a nice chaining syntax.",
   "homepage": "https://github.com/Otbivnoe/Framer",
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/Otbivnoe/Framer.git",
-    "tag": "0.1.0"
+    "tag": "0.2.0"
   },
   "requires_arc": true,
   "platforms": {

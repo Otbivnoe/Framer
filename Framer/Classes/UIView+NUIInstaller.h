@@ -1,5 +1,5 @@
 //
-//  UIView+Installer.h
+//  UIView+NUIInstaller.h
 //  Framer
 //
 //  Created by Nikita Ermolenko on 06/06/16.
@@ -10,7 +10,7 @@
 
 @class NUIFramer;
 
-@interface UIView (Installer)
+@interface UIView (NUIInstaller)
 
 - (void)installFrames:(void(^)(NUIFramer *framer))installerBlock;
 

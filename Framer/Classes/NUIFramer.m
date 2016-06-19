@@ -10,7 +10,17 @@
 #import "NUIHandler.h"
 #import "NUIAdditionalConfigurateFactory.h"
 
+#import "UIView+NUIAdditions.h"
+
+typedef NS_ENUM(NSInteger, NUIValueType) {
+    NUIValueTypeWidth,
+    NUIValueTypeHeight
+};
+
 @interface NUIFramer ()
+
+@property (nonatomic, getter=isTopFrameInstalled) BOOL topFrameInstalled;
+@property (nonatomic, getter=isLeftFrameInstalled) BOOL leftFrameInstalled;
 
 @property (nonatomic) NSMutableArray <NUIHandler *> *handlers;
 @property (nonatomic) CGRect newRect;
@@ -30,6 +40,7 @@
     return self;
 }
 
+#warning remove later
 - (void)dealloc {
     
     NSLog(@"%s", __PRETTY_FUNCTION__);
@@ -78,13 +89,11 @@
             [obj additionalConfigurateForFramer:self];
         }
     }];
-    
     [self configurateOrderHandlers];
     
     [self.handlers enumerateObjectsUsingBlock:^(NUIHandler * _Nonnull handler, NSUInteger idx, BOOL * _Nonnull stop) {
         handler.handlerBlock();
     }];
-    
     [self endConfigurate];
 }
 
@@ -94,57 +103,14 @@
     return self;
 }
 
-#pragma mark Top priority 
+#pragma mark - Top priority
 
-- (NUIFramer *(^)(CGFloat))left {
-    
-    return ^id(CGFloat x) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.newRect;
-            frame.origin.x = x;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
-        return self;
-    };
-}
-
-- (NUIFramer *(^)(CGFloat))top {
-    
-    return ^id(CGFloat y) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.newRect;
-            frame.origin.y = y;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
-        return self;
-    };
-}
-
-#pragma mark Middle priority
+#pragma mark Width / Height relations
 
 - (NUIFramer* (^)(CGFloat))width {
     
     return ^id(CGFloat width) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.newRect;
-            frame.size.width = width;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
+        [self setValue:width withType:NUIValueTypeWidth];
         return self;
     };
 }
@@ -152,39 +118,122 @@
 - (NUIFramer* (^)(CGFloat))height {
     
     return ^id(CGFloat height) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.newRect;
-            frame.size.height = height;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
+        [self setValue:height withType:NUIValueTypeHeight];
         return self;
     };
 }
 
-- (NUIFramer *(^)(CGFloat))bottom {
+- (void)setValue:(CGFloat)value withType:(NUIValueType)type {
     
-    return ^id(CGFloat bottom) {
+    __weak typeof(self) weakSelf = self;
+    
+    dispatch_block_t handler = ^ {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        CGRect frame = [strongSelf setFrameValue:value type:type];
+        strongSelf.newRect = frame;
+    };
+    [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
+}
+
+- (CGRect)setFrameValue:(CGFloat)value type:(NUIValueType)type {
+    
+    CGRect frame = self.newRect;
+    switch (type) {
+        case NUIValueTypeWidth:
+            frame.size.width = value;
+            break;
+        case NUIValueTypeHeight:
+            frame.size.height = value;
+            break;
+    }
+    return frame;
+}
+
+#pragma mark Left relations
+
+- (NUIFramer *(^)(CGFloat))left {
+
+    return ^id(CGFloat inset) {
+        return self.left_to(self.view.superview.left, inset);
+    };
+}
+
+- (NUIFramer *(^)(UIView *, CGFloat))left_to {
+    
+    return ^id(UIView *view, CGFloat inset) {
         
         __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
+            CGFloat x =  [strongSelf leftRelationXForView:view withInset:inset relationType:relationType];
             CGRect frame = strongSelf.newRect;
-            CGFloat height = CGRectGetHeight(strongSelf.view.superview.bounds) - (CGRectGetMinY(strongSelf.newRect) + bottom);
-            frame.size.height = height;
+            frame.origin.x = x;
             strongSelf.newRect = frame;
+            strongSelf.leftFrameInstalled = YES;
         };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
 }
 
-- (NUIFramer *(^)(UIEdgeInsets))insets {
+- (CGFloat)leftRelationXForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat x = 0;
+    switch (relationType) {
+        case NUIRelationTypeLeft:     x = CGRectGetMinX(convertedRect); break;
+        case NUIRelationTypeRight:    x = CGRectGetMaxX(convertedRect); break;
+        case NUIRelationTypeCenterX:  x = CGRectGetMidX(convertedRect); break;
+    }
+    return x + inset;
+}
+
+#pragma mark Top relations
+
+- (NUIFramer *(^)(CGFloat))top {
+    
+    return ^id(CGFloat inset) {
+        return self.top_to(self.view.superview.top, inset);
+    };
+}
+
+- (NUIFramer *(^)(UIView *, CGFloat))top_to {
+    
+    return ^id(UIView *view, CGFloat inset) {
+        
+        __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
+        
+        dispatch_block_t handler = ^ {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            CGFloat y =  [strongSelf topRelationYForView:view withInset:inset relationType:relationType];
+            CGRect frame = strongSelf.newRect;
+            frame.origin.y = y;
+            strongSelf.newRect = frame;
+            strongSelf.topFrameInstalled = YES;
+        };
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
+        return self;
+    };
+}
+
+- (CGFloat)topRelationYForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat y = 0;
+    switch (relationType) {
+        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect) + inset; break;
+        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect) - inset; break;
+        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect) - inset; break;
+    }
+    return y;
+}
+
+#pragma mark - Middle priority
+
+- (NUIFramer *(^)(UIEdgeInsets))edges {
     
     return ^id(UIEdgeInsets insets) {
         
@@ -202,77 +251,12 @@
     };
 }
 
-- (NUIFramer *(^)(UIView *, CGFloat))left_to {
-    
-    return ^id(UIView *view, CGFloat inset) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat x =  CGRectGetMaxX(view.frame) + inset;
-            CGRect frame = strongSelf.newRect;
-            frame.origin.x = x;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
-        return self;
-    };
-}
+#pragma mark Bottom relations
 
-- (NUIFramer *(^)(UIView *, CGFloat))right_to {
-    
-    return ^id(UIView *view, CGFloat inset) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat x =  CGRectGetMinX(view.frame) - inset - CGRectGetWidth(strongSelf.newRect);
-            CGRect frame = strongSelf.newRect;
-            frame.origin.x = x;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
-        return self;
-    };
-}
+- (NUIFramer *(^)(CGFloat))bottom {
 
-#pragma mark Low priority
-
-- (NUIFramer *(^)(CGFloat))right {
-    
     return ^id(CGFloat inset) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGRect frame = strongSelf.newRect;
-            CGFloat width = CGRectGetWidth(strongSelf.view.superview.bounds) - (CGRectGetMinX(strongSelf.newRect) + inset);
-            frame.size.width = width;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
-        return self;
-    };
-}
-
-- (NUIFramer *(^)(UIView *, CGFloat))top_to {
-    
-    return ^id(UIView *view, CGFloat inset) {
-        
-        __weak typeof(self) weakSelf = self;
-        
-        dispatch_block_t handler = ^ {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat y =  CGRectGetMaxY(view.frame) + inset;
-            CGRect frame = strongSelf.newRect;
-            frame.origin.y = y;
-            strongSelf.newRect = frame;
-        };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
-        return self;
+        return self.bottom_to(self.view.superview.bottom, inset);
     };
 }
 
@@ -281,16 +265,112 @@
     return ^id(UIView *view, CGFloat inset) {
         
         __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat y =  CGRectGetMinY(view.frame) - inset - CGRectGetHeight(strongSelf.newRect);
             CGRect frame = strongSelf.newRect;
-            frame.origin.y = y;
+            if (!strongSelf.isTopFrameInstalled) {
+                CGFloat y =  [strongSelf bottomRelationYForView:view withInset:inset relationType:relationType];
+                frame.origin.y = y;
+            } else {
+                frame.size.height = [strongSelf bottomRelationHeightForView:view withInset:inset relationType:relationType];
+            }
             strongSelf.newRect = frame;
         };
-        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
+    };
+}
+
+- (CGFloat)bottomRelationHeightForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat height = 0;
+    switch (relationType) {
+        case NUIRelationTypeTop:      height = fabsf(CGRectGetMinY(self.newRect) - CGRectGetMinY(convertedRect)); break;
+        case NUIRelationTypeBottom:   height = fabsf(CGRectGetMinY(self.newRect) - CGRectGetMaxY(convertedRect)); break;
+        case NUIRelationTypeCenterY:  height = fabsf(CGRectGetMinY(self.newRect) - CGRectGetMidY(convertedRect)); break;
+    }
+    return height - inset;
+}
+
+- (CGFloat)bottomRelationYForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat y = 0;
+    switch (relationType) {
+        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
+        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
+        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
+    }
+    return y - inset - CGRectGetHeight(self.newRect);
+}
+
+#pragma mark Right relations
+
+- (NUIFramer *(^)(CGFloat))right {
+
+    return ^id(CGFloat inset) {
+        return self.right_to(self.view.superview.right, inset);
+    };
+}
+
+- (NUIFramer *(^)(UIView *, CGFloat))right_to {
+    
+    return ^id(UIView *view, CGFloat inset) {
+        
+        __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
+        
+        dispatch_block_t handler = ^ {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            CGRect frame = strongSelf.newRect;
+            if (!strongSelf.isLeftFrameInstalled) {
+                CGFloat x =  [strongSelf rightRelationXForView:view withInset:inset relationType:relationType];
+                frame.origin.x = x;
+            } else {
+                frame.size.width = [strongSelf rightRelationWidthForView:view withInset:inset relationType:relationType];
+            }
+            strongSelf.newRect = frame;
+        };
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
+        return self;
+    };
+}
+
+- (CGFloat)rightRelationWidthForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat width = 0;
+    switch (relationType) {
+        case NUIRelationTypeRight:      width = fabsf(CGRectGetMinX(self.newRect) - CGRectGetMaxX(convertedRect)); break;
+        case NUIRelationTypeLeft:       width = fabsf(CGRectGetMinX(self.newRect) - CGRectGetMinX(convertedRect)); break;
+        case NUIRelationTypeCenterX:    width = fabsf(CGRectGetMinX(self.newRect) - CGRectGetMidX(convertedRect)); break;
+    }
+    return width - inset;
+}
+
+- (CGFloat)rightRelationXForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat x = 0;
+    switch (relationType) {
+        case NUIRelationTypeRight:      x = CGRectGetMaxX(convertedRect); break;
+        case NUIRelationTypeLeft:       x = CGRectGetMinX(convertedRect); break;
+        case NUIRelationTypeCenterX:    x = CGRectGetMidX(convertedRect); break;
+    }
+    return x - inset - CGRectGetWidth(self.newRect);
+}
+
+#pragma mark - Low priority
+
+#pragma mark Center X relations
+
+- (NUIFramer *(^)(CGFloat inset))super_centerX {
+    
+    return ^id(CGFloat inset) {
+        return self.centerX_to(self.view.superview.centerX, inset);
     };
 }
 
@@ -299,15 +379,37 @@
     return ^id(UIView *view, CGFloat inset) {
         
         __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             CGRect frame = strongSelf.newRect;
-            frame.origin.x = (view.center.x - CGRectGetWidth(frame) / 2) + inset;
+            frame.origin.x = [strongSelf centerRelationXForView:view withInset:inset relationType:relationType];
             strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
         return self;
+    };
+}
+
+- (CGFloat)centerRelationXForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat x = 0;
+    switch (relationType) {
+        case NUIRelationTypeRight:      x = CGRectGetMaxX(convertedRect); break;
+        case NUIRelationTypeLeft:       x = CGRectGetMinX(convertedRect); break;
+        case NUIRelationTypeCenterX:    x = CGRectGetMidX(convertedRect); break;
+    }
+    return x - CGRectGetWidth(self.newRect) / 2 + inset;
+}
+
+#pragma mark Center Y relations
+
+- (NUIFramer *(^)(CGFloat inset))super_centerY {
+    
+    return ^id(CGFloat inset) {
+        return self.centerY_to(self.view.superview.centerY, inset);
     };
 }
 
@@ -316,11 +418,12 @@
     return ^id(UIView *view, CGFloat inset) {
         
         __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             CGRect frame = strongSelf.newRect;
-            frame.origin.y = (view.center.y - CGRectGetHeight(frame) / 2) + inset;
+            frame.origin.y = [strongSelf centerRelationYForView:view withInset:inset relationType:relationType];
             strongSelf.newRect = frame;
         };
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
@@ -328,18 +431,16 @@
     };
 }
 
-- (NUIFramer *(^)(CGFloat inset))super_centerX {
+- (CGFloat)centerRelationYForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
     
-    return ^id(CGFloat inset) {
-        return self.centerX_to(self.view.superview, inset);
-    };
-}
-
-- (NUIFramer *(^)(CGFloat inset))super_centerY {
-    
-    return ^id(CGFloat inset) {
-        return self.centerY_to(self.view.superview, inset);
-    };
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    CGFloat y = 0;
+    switch (relationType) {
+        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
+        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
+        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
+    }
+    return y - CGRectGetHeight(self.newRect) / 2 + inset;
 }
 
 @end
