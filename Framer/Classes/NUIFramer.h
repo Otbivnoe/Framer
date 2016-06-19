@@ -10,43 +10,69 @@
 
 @interface NUIFramer : NSObject
 
+/**
+ *  The view for which installs relations.
+ */
 @property (nonatomic, weak) UIView *view;
 
-+ (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock;
-
+/**
+ *	Optional semantic property for improvements readability.
+ */
 - (NUIFramer *)and;
 
 /**
- *	Edges relations for superview
+ *  Relations for settings custom width and height.
  */
-- (NUIFramer *(^)(CGFloat))width;
-- (NUIFramer *(^)(CGFloat))height;
+- (NUIFramer *(^)(CGFloat width))width;
+- (NUIFramer *(^)(CGFloat height))height;
 
+/**
+ *  Edges relations with superview.
+ *  @param inset Additional inset between self.view and superview.
+ */
 - (NUIFramer *(^)(CGFloat inset))left;
 - (NUIFramer *(^)(CGFloat inset))top;
 - (NUIFramer *(^)(CGFloat inset))bottom;
 - (NUIFramer *(^)(CGFloat inset))right;
 
+/**
+ *  Conveniently edges relations for setting left / right/ top / bottom in one method.
+ *  @params edges Edges between view and superview.
+ */
 - (NUIFramer *(^)(UIEdgeInsets insets))edges;
 
-
-
-
-- (NUIFramer *(^)(UIView *, CGFloat))left_to;
-- (NUIFramer *(^)(UIView *, CGFloat))right_to;
-- (NUIFramer *(^)(UIView *, CGFloat))top_to;
-- (NUIFramer *(^)(UIView *, CGFloat))bottom_to;
+/**
+ *	Edges relations with other view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relations.
+ *  @param inset Additional inset between self.view and other view.
+ */
+- (NUIFramer *(^)(UIView *view, CGFloat inset))left_to;
+- (NUIFramer *(^)(UIView *view, CGFloat inset))right_to;
+- (NUIFramer *(^)(UIView *view, CGFloat inset))top_to;
+- (NUIFramer *(^)(UIView *view, CGFloat inset))bottom_to;
 
 /**
- *	Center relations with other view
+ *	Center relations with other view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relations.
+ *  @param inset Additional inset between center of self.view and other view.
  */
-- (NUIFramer *(^)(UIView *, CGFloat))centerX_to;
-- (NUIFramer *(^)(UIView *, CGFloat))centerY_to;
+- (NUIFramer *(^)(UIView *view, CGFloat inset))centerX_to;
+- (NUIFramer *(^)(UIView *view, CGFloat inset))centerY_to;
 
 /**
- *	Center relations with superview
+ *	Center relations with superview.
+ *  @param inset Additional inset between center of self.view and center of superview.
  */
-- (NUIFramer *(^)(CGFloat))super_centerX;
-- (NUIFramer *(^)(CGFloat))super_centerY;
+- (NUIFramer *(^)(CGFloat inset))super_centerX;
+- (NUIFramer *(^)(CGFloat inset))super_centerY;
+
+
+/**
+ *	Configuration method.
+ *  @param view The view for which installs relations.
+ *  @param installerBlock An installer block within which you can configurate frame relations.
+ *  @see -installFrames: (UIView+NUIInstaller.h)
+ */
++ (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock;
 
 @end

@@ -8,9 +8,7 @@
 
 #import "NUIViewController.h"
 
-#import <Framer/UIView+NUIInstaller.h>
-#import <Framer/UIView+NUIAdditions.h>
-#import <Framer/NUIFramer.h>
+#import <Framer/Framer.h>
 
 @interface NUIViewController ()
 

@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 
+#import "Framer.h"
 #import "NUIAdditionalConfigurateFactory.h"
 #import "NUIConfigurateProtocol.h"
 #import "NUIFramer.h"
