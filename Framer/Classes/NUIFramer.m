@@ -40,12 +40,6 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     return self;
 }
 
-#warning remove later
-- (void)dealloc {
-    
-    NSLog(@"%s", __PRETTY_FUNCTION__);
-}
-
 #pragma mark - Configurate methods
 
 + (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock {
@@ -186,6 +180,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeLeft:     x = CGRectGetMinX(convertedRect); break;
         case NUIRelationTypeRight:    x = CGRectGetMaxX(convertedRect); break;
         case NUIRelationTypeCenterX:  x = CGRectGetMidX(convertedRect); break;
+        default:break;
     }
     return x + inset;
 }
@@ -227,6 +222,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect) + inset; break;
         case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect) - inset; break;
         case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect) - inset; break;
+        default:break;
     }
     return y;
 }
@@ -288,9 +284,10 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
     CGFloat height = 0;
     switch (relationType) {
-        case NUIRelationTypeTop:      height = fabsf(CGRectGetMinY(self.newRect) - CGRectGetMinY(convertedRect)); break;
-        case NUIRelationTypeBottom:   height = fabsf(CGRectGetMinY(self.newRect) - CGRectGetMaxY(convertedRect)); break;
-        case NUIRelationTypeCenterY:  height = fabsf(CGRectGetMinY(self.newRect) - CGRectGetMidY(convertedRect)); break;
+        case NUIRelationTypeTop:      height = fabs(CGRectGetMinY(self.newRect) - CGRectGetMinY(convertedRect)); break;
+        case NUIRelationTypeBottom:   height = fabs(CGRectGetMinY(self.newRect) - CGRectGetMaxY(convertedRect)); break;
+        case NUIRelationTypeCenterY:  height = fabs(CGRectGetMinY(self.newRect) - CGRectGetMidY(convertedRect)); break;
+        default:break;
     }
     return height - inset;
 }
@@ -303,6 +300,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
         case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
         case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
+        default:break;
     }
     return y - inset - CGRectGetHeight(self.newRect);
 }
@@ -344,9 +342,10 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
     CGFloat width = 0;
     switch (relationType) {
-        case NUIRelationTypeRight:      width = fabsf(CGRectGetMinX(self.newRect) - CGRectGetMaxX(convertedRect)); break;
-        case NUIRelationTypeLeft:       width = fabsf(CGRectGetMinX(self.newRect) - CGRectGetMinX(convertedRect)); break;
-        case NUIRelationTypeCenterX:    width = fabsf(CGRectGetMinX(self.newRect) - CGRectGetMidX(convertedRect)); break;
+        case NUIRelationTypeRight:      width = fabs(CGRectGetMinX(self.newRect) - CGRectGetMaxX(convertedRect)); break;
+        case NUIRelationTypeLeft:       width = fabs(CGRectGetMinX(self.newRect) - CGRectGetMinX(convertedRect)); break;
+        case NUIRelationTypeCenterX:    width = fabs(CGRectGetMinX(self.newRect) - CGRectGetMidX(convertedRect)); break;
+        default:break;
     }
     return width - inset;
 }
@@ -359,6 +358,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeRight:      x = CGRectGetMaxX(convertedRect); break;
         case NUIRelationTypeLeft:       x = CGRectGetMinX(convertedRect); break;
         case NUIRelationTypeCenterX:    x = CGRectGetMidX(convertedRect); break;
+        default:break;
     }
     return x - inset - CGRectGetWidth(self.newRect);
 }
@@ -400,6 +400,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeRight:      x = CGRectGetMaxX(convertedRect); break;
         case NUIRelationTypeLeft:       x = CGRectGetMinX(convertedRect); break;
         case NUIRelationTypeCenterX:    x = CGRectGetMidX(convertedRect); break;
+        default:break;
     }
     return x - CGRectGetWidth(self.newRect) / 2 + inset;
 }
@@ -439,6 +440,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
         case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
         case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
+        default:break;
     }
     return y - CGRectGetHeight(self.newRect) / 2 + inset;
 }
