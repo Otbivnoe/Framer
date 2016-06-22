@@ -17,6 +17,8 @@
 @property (nonatomic) UIView *view3;
 @property (nonatomic) UIView *view4;
 
+@property (nonatomic) UIView *container;
+
 @property (nonatomic) UILabel *label1;
 @property (nonatomic) UILabel *label2;
 @property (nonatomic) UILabel *label3;
@@ -51,13 +53,18 @@
     self.view3 = [[UIView alloc] init];
     self.view3.backgroundColor = [UIColor yellowColor];
     
-    [self.view addSubview:self.view1];
-    [self.view addSubview:self.view2];
-    [self.view addSubview:self.view3];
+    self.container = [[UIView alloc] init];
+    self.container.backgroundColor = [UIColor blackColor];
     
-    self.view4 = [[UIView alloc] init];
-    self.view4.backgroundColor = [UIColor blackColor];
-    [self.view addSubview:self.view4];
+//    [self.view addSubview:self.view1];
+//    [self.view addSubview:self.view2];
+//    [self.view addSubview:self.view3];
+
+    
+    [self.container addSubview:self.view1];
+    [self.container addSubview:self.view2];
+    [self.container addSubview:self.view3];
+    [self.view addSubview:self.container];
     
 }
 
@@ -71,19 +78,51 @@
     [super viewDidLayoutSubviews];
     
     
+//    [self.view1 installFrames:^(NUIFramer *framer) {
+//        framer.width(40);
+//        framer.height(40);
+//        framer.top(0).and.left(10);
+//    }];
+//    
+//    [self.view2 installFrames:^(NUIFramer *framer) {
+//        framer.width(20);
+//        framer.height(20);
+//        framer.top_to(self.view1.bottom, 10);
+//        framer.left(10);
+//    }];
+//    
+//    [self.view3 installFrames:^(NUIFramer *framer) {
+//        framer.width(20);
+//        framer.height(20);
+//        framer.top_to(self.view2.bottom, 10);
+//        framer.left(10);
+//    }];
+    
     [self.view1 installFrames:^(NUIFramer *framer) {
-        framer.width(100);
-        framer.height(100);
-        framer.super_centerX(0);
-        framer.super_centerY(0);
+        framer.width(40);
+        framer.height(40);
+        framer.top(50).and.left(50);
     }];
     
     [self.view2 installFrames:^(NUIFramer *framer) {
-        framer.width(40).and.height(40);
-        framer.centerY_to(self.view1.bottom, 0);
-        framer.centerX_to(self.view1.centerX, 0);
+        framer.width(20);
+        framer.height(20);
+        framer.bottom_to(self.view1.top, 10);
+        framer.left(0);
     }];
     
+    [self.view3 installFrames:^(NUIFramer *framer) {
+        framer.width(20);
+        framer.height(20);
+        framer.top(10);
+        framer.left_to(self.view2.right, 40);
+    }];
+    
+    [self.container installFrames:^(NUIFramer *framer) {
+        framer.super_centerX(0);
+        framer.super_centerY(0);
+        framer.container();
+    }];
 }
 
 

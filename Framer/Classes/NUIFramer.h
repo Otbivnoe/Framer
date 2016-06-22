@@ -27,7 +27,7 @@
 - (NUIFramer *(^)(CGFloat height))height;
 
 /**
- *  Edges relations with superview.
+ *  Edges relations relatively superview.
  *  @param inset Additional inset between self.view and superview.
  */
 - (NUIFramer *(^)(CGFloat inset))left;
@@ -42,7 +42,13 @@
 - (NUIFramer *(^)(UIEdgeInsets insets))edges;
 
 /**
- *	Edges relations with other view. Possible to use these methods for superview.
+ *  Configure wrapped frame by all subviews.
+ *  @warning You should not use 'bottom' and 'right' (relatively superview) configurations by subviews.
+ */
+- (NUIFramer *(^)())container;
+
+/**
+ *	Edges relations relatively other view. Possible to use these methods for superview.
  *  @param view  The view with which you want to add relations.
  *  @param inset Additional inset between self.view and other view.
  */
@@ -52,7 +58,7 @@
 - (NUIFramer *(^)(UIView *view, CGFloat inset))bottom_to;
 
 /**
- *	Center relations with other view. Possible to use these methods for superview.
+ *	Center relations with relatively view. Possible to use these methods for superview.
  *  @param view  The view with which you want to add relations.
  *  @param inset Additional inset between center of self.view and other view.
  */
@@ -60,12 +66,11 @@
 - (NUIFramer *(^)(UIView *view, CGFloat inset))centerY_to;
 
 /**
- *	Center relations with superview.
+ *	Center relations relatively superview.
  *  @param inset Additional inset between center of self.view and center of superview.
  */
 - (NUIFramer *(^)(CGFloat inset))super_centerX;
 - (NUIFramer *(^)(CGFloat inset))super_centerY;
-
 
 /**
  *	Configuration method.

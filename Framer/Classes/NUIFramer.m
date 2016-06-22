@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer* (^)(CGFloat))width {
     
     return ^id(CGFloat width) {
-        [self setValue:width withType:NUIValueTypeWidth];
+        [self setHighPriorityValue:width withType:NUIValueTypeWidth];
         return self;
     };
 }
@@ -112,12 +112,12 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer* (^)(CGFloat))height {
     
     return ^id(CGFloat height) {
-        [self setValue:height withType:NUIValueTypeHeight];
+        [self setHighPriorityValue:height withType:NUIValueTypeHeight];
         return self;
     };
 }
 
-- (void)setValue:(CGFloat)value withType:(NUIValueType)type {
+- (void)setHighPriorityValue:(CGFloat)value withType:(NUIValueType)type {
     
     __weak typeof(self) weakSelf = self;
     
@@ -219,12 +219,28 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
     CGFloat y = 0;
     switch (relationType) {
-        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect) + inset; break;
-        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect) - inset; break;
-        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect) - inset; break;
+        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
+        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
+        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
         default:break;
     }
-    return y;
+    return y + inset;
+}
+
+#pragma mark Container
+
+- (NUIFramer *(^)())container {
+    
+    return ^id() {
+        CGRect frame = CGRectZero;
+        for (UIView *subview in [self.view subviews]) {
+            frame = CGRectUnion(frame, subview.frame);
+        }
+
+        [self setHighPriorityValue:CGRectGetWidth(frame) withType:NUIValueTypeWidth];
+        [self setHighPriorityValue:CGRectGetHeight(frame) withType:NUIValueTypeHeight];
+        return self;
+    };
 }
 
 #pragma mark - Middle priority

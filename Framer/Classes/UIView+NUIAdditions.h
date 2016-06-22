@@ -33,8 +33,8 @@ typedef NS_ENUM(NSInteger, NUIRelationType) {
  *  Example 
             [self.view1 installFrames:^(NUIFramer *framer) {
                 framer.width(40).and.height(40);
-                framer.centerY_to(self.view1.bottom, 0);
-                framer.centerX_to(self.view1.centerX, 0);
+                framer.centerY_to(self.view2.bottom, 0);
+                framer.centerX_to(self.view2.centerX, 0);
             }];
  */
 @property (nonatomic, readonly) UIView *left;
