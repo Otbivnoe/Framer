@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 @property (nonatomic, getter=isTopFrameInstalled) BOOL topFrameInstalled;
 @property (nonatomic, getter=isLeftFrameInstalled) BOOL leftFrameInstalled;
 
-@property (nonatomic) NSMutableArray <NUIHandler *> *handlers;
+@property (nonatomic, nonnull) NSMutableArray <NUIHandler *> *handlers;
 @property (nonatomic) CGRect newRect;
 
 @end

@@ -6,11 +6,10 @@
 //  Copyright © 2016 Nikita Ermolenko. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "NUIConfigurateProtocol.h"
 
 @interface NUIAdditionalConfigurateFactory : NSObject
 
-+ (NSArray <id<NUIConfigurateProtocol>> *)additionalConfigurates;
++ (nonnull NSArray <id<NUIConfigurateProtocol>> *)additionalConfigurates;
 
 @end

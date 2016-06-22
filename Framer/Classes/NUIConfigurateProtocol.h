@@ -6,13 +6,11 @@
 //  Copyright © 2016 Nikita Ermolenko. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-
 @class NUIFramer;
 @protocol NUIConfigurateProtocol <NSObject>
 
-@property (nonatomic) Class class;
+@property (nonatomic, nonnull) Class class;
 
-- (void)additionalConfigurateForFramer:(NUIFramer *)framer;
+- (void)additionalConfigurateForFramer:(nonnull NUIFramer *)framer;
 
 @end

@@ -11,7 +11,8 @@
 
 @implementation NUIAdditionalConfigurateFactory
 
-+ (NSArray <id<NUIConfigurateProtocol>> *)additionalConfigurates {
++ (nonnull NSArray <id<NUIConfigurateProtocol>> *)additionalConfigurates {
+    
     return @[[[NUILabelConfigurate alloc] init]];
 }
 

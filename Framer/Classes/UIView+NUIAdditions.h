@@ -21,6 +21,8 @@ typedef NS_ENUM(NSInteger, NUIRelationType) {
     NUIRelationTypeCenterY
 };
 
+NS_ASSUME_NONNULL_BEGIN
+
 @interface UIView (NUIAdditions)
 
 /**
@@ -45,3 +47,5 @@ typedef NS_ENUM(NSInteger, NUIRelationType) {
 @property (nonatomic, readonly) UIView *centerY;
 
 @end
+
+NS_ASSUME_NONNULL_END

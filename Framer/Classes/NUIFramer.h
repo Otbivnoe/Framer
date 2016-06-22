@@ -15,6 +15,8 @@
  */
 @property (nonatomic, weak) UIView *view;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  *	Optional semantic property for improvements readability.
  */
@@ -79,5 +81,7 @@
  *  @see -installFrames: (UIView+NUIInstaller.h)
  */
 + (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock;
+
+NS_ASSUME_NONNULL_END
 
 @end

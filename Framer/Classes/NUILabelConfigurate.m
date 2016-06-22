@@ -22,7 +22,7 @@
     return self;
 }
 
-- (void)additionalConfigurateForFramer:(NUIFramer *)framer {
+- (void)additionalConfigurateForFramer:(nonnull NUIFramer *)framer {
     
     [framer.view sizeToFit];
     framer.width(CGRectGetWidth(framer.view.frame));

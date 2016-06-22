@@ -13,7 +13,7 @@
 
 #pragma mark - Framer
 
-- (void)installFrames:(void(^)(NUIFramer *framer))installerBlock {
+- (void)installFrames:(void(^)(NUIFramer *_Nonnull framer))installerBlock {
     
     [NUIFramer configurateView:self withInstallerBlock:installerBlock];
 }
