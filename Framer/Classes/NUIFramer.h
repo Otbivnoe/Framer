@@ -13,7 +13,7 @@
 /**
  *  The view for which installs relations.
  */
-@property (nonatomic, weak) UIView *view;
+@property (nonatomic, weak, nullable) UIView *view;
 
 NS_ASSUME_NONNULL_BEGIN
 

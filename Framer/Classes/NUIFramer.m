@@ -418,7 +418,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeCenterX:    x = CGRectGetMidX(convertedRect); break;
         default:break;
     }
-    return x - CGRectGetWidth(self.newRect) / 2 + inset;
+    return x - CGRectGetWidth(self.newRect) / 2 - inset;
 }
 
 #pragma mark Center Y relations
@@ -458,7 +458,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
         default:break;
     }
-    return y - CGRectGetHeight(self.newRect) / 2 + inset;
+    return y - CGRectGetHeight(self.newRect) / 2 - inset;
 }
 
 @end

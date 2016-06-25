@@ -56,16 +56,13 @@
     self.container = [[UIView alloc] init];
     self.container.backgroundColor = [UIColor blackColor];
     
-//    [self.view addSubview:self.view1];
-//    [self.view addSubview:self.view2];
-//    [self.view addSubview:self.view3];
+    [self.view addSubview:self.view1];
+    [self.view1 addSubview:self.view2];
+    [self.view addSubview:self.view3];
 
-    
-    [self.container addSubview:self.view1];
-    [self.container addSubview:self.view2];
-    [self.container addSubview:self.view3];
-    [self.view addSubview:self.container];
-    
+    self.view1.frame = CGRectMake(100, 100, 300, 300);
+    self.view2.frame = CGRectMake(50, 50, 200, 200);
+    self.view3.frame = CGRectMake(0, 90, 50, 50);
 }
 
 - (void)dealloc {
@@ -77,6 +74,11 @@
     
     [super viewDidLayoutSubviews];
     
+    [self.view3 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.centerX_to(self.view2, 0);
+    }];
+    
+    NSLog(@"frame = %@", NSStringFromCGRect(self.view3.frame));
     
 //    [self.view1 installFrames:^(NUIFramer *framer) {
 //        framer.width(40);
@@ -97,32 +99,7 @@
 //        framer.top_to(self.view2.bottom, 10);
 //        framer.left(10);
 //    }];
-    
-    [self.view1 installFrames:^(NUIFramer *framer) {
-        framer.width(40);
-        framer.height(40);
-        framer.top(50).and.left(50);
-    }];
-    
-    [self.view2 installFrames:^(NUIFramer *framer) {
-        framer.width(20);
-        framer.height(20);
-        framer.bottom_to(self.view1.top, 10);
-        framer.left(0);
-    }];
-    
-    [self.view3 installFrames:^(NUIFramer *framer) {
-        framer.width(20);
-        framer.height(20);
-        framer.top(10);
-        framer.left_to(self.view2.right, 40);
-    }];
-    
-    [self.container installFrames:^(NUIFramer *framer) {
-        framer.super_centerX(0);
-        framer.super_centerY(0);
-        framer.container();
-    }];
+
 }
 
 
