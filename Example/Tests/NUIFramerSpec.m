@@ -142,7 +142,6 @@ describe(@"Framer", ^{
                     [[theValue(testingView.frame) should] equal:theValue(CGRectMake(315, 0, 50, 50))];
                 });
             });
-            
         });
         
         /*
@@ -207,7 +206,421 @@ describe(@"Framer", ^{
                     [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 315, 50, 50))];
                 });
             });
+        });
+        
+        /*
+            BOTTOM_TO
+         */
+        
+        context(@"bottom_to relation with", ^{
             
+            context(@"nestedView2.top", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.bottom_to(nestedView2.top, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 100, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.bottom_to(nestedView2.top, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 90, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.centerY", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.bottom_to(nestedView2.centerY, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 200, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.bottom_to(nestedView2.centerY, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 190, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.bottom", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.bottom_to(nestedView2.bottom, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 300, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.bottom_to(nestedView2.bottom, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 290, 50, 50))];
+                });
+            });
+        });
+        
+        /*
+            TOP_TO
+         */
+        
+        context(@"top_to relation with", ^{
+            
+            context(@"nestedView2.top", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.top_to(nestedView2.top, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 150, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.top_to(nestedView2.top, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 160, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.centerY", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.top_to(nestedView2.centerY, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 250, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.top_to(nestedView2.centerY, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 260, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.bottom", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.top_to(nestedView2.bottom, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 350, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.top_to(nestedView2.bottom, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 360, 50, 50))];
+                });
+            });
+        });
+        
+        /*
+            RIGHT_TO
+         */
+        
+        context(@"right_to relation with", ^{
+            
+            context(@"nestedView2.right", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.right_to(nestedView2.right, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(300, 0, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.right_to(nestedView2.right, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(290, 0, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.centerX", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.right_to(nestedView2.centerX, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(200, 0, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.right_to(nestedView2.centerX, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(190, 0, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.left", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.right_to(nestedView2.left, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(100, 0, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.right_to(nestedView2.left, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(90, 0, 50, 50))];
+                });
+            });
+        });
+        
+        /*
+            LEFT_TO
+         */
+        
+        context(@"left_to relation with", ^{
+            
+            context(@"nestedView2.right", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.left_to(nestedView2.right, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(350, 0, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.left_to(nestedView2.right, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(360, 0, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.centerX", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.left_to(nestedView2.centerX, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(250, 0, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.left_to(nestedView2.centerX, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(260, 0, 50, 50))];
+                });
+            });
+            
+            context(@"nestedView2.left", ^{
+                
+                it(@"with zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.left_to(nestedView2.left, 0);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(150, 0, 50, 50))];
+                });
+                
+                it(@"with non zero offset", ^{
+                    [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                        framer.left_to(nestedView2.left, 10);
+                    }];
+                    
+                    [[theValue(testingView.frame) should] equal:theValue(CGRectMake(160, 0, 50, 50))];
+                });
+            });
+        });
+        
+        /*
+            LEFT
+         */
+        
+        context(@"left to superview relation", ^{
+            
+            it(@"with zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.left(0);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 50, 50))];
+            });
+            
+            it(@"with non zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.left(10);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(10, 0, 50, 50))];
+            });
+        });
+        
+        /*
+            TOP
+         */
+        
+        context(@"top to superview relation", ^{
+            
+            it(@"with zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.top(0);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 50, 50))];
+            });
+            
+            it(@"with non zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.top(10);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 10, 50, 50))];
+            });
+        });
+        
+        /*
+            BOTTOM
+         */
+        
+        context(@"bottom to superview relation", ^{
+            
+            it(@"with zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.bottom(0);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 450, 50, 50))];
+            });
+            
+            it(@"with non zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.bottom(10);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 440, 50, 50))];
+            });
+        });
+        
+        /*
+            RIGHT
+         */
+        
+        context(@"right to superview relation", ^{
+            
+            it(@"with zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.right(0);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(450, 0, 50, 50))];
+            });
+            
+            it(@"with non zero offset", ^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.right(10);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(440, 0, 50, 50))];
+            });
+        });
+        
+        /*
+            WIDTH
+         */
+        
+        context(@"width relation", ^{
+            
+            specify(^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.width(400);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 400, 50))];
+            });
+        });
+        
+        /*
+            HEIGHT
+         */
+        
+        context(@"height relation", ^{
+            
+            specify(^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.height(400);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 50, 400))];
+            });
+        });
+        
+        /*
+            EDGES
+         */
+        
+        context(@"edges with superview", ^{
+            
+            specify(^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.edges(UIEdgeInsetsMake(20, 20, 20, 20));
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(20, 20, 460, 460))];
+            });
+        });
+        
+        /*
+            CONTAINER
+         */
+        
+        context(@"container for wrapping subview", ^{
+            
+            specify(^{
+                UIView *view1 = [[UIView alloc] initWithFrame:CGRectMake(50, 50, 50, 50)];
+                UIView *view2 = [[UIView alloc] initWithFrame:CGRectMake(70, 70, 50, 50)];
+                
+                UIView *container = [[UIView alloc] init];
+                [container addSubview:view1];
+                [container addSubview:view2];
+                
+                [container installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.container();
+                }];
+                
+                [[theValue(container.frame) should] equal:theValue(CGRectMake(0, 0, 120, 120))];
+            });
         });
         
     });
