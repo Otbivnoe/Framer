@@ -25,7 +25,7 @@ pod "Framer"
 
 then add 
 ```obj-c
-    #import <Framer/Framer.h>
+#import <Framer/Framer.h>
 ```
 # USAGE
 
