@@ -36,6 +36,16 @@ describe(@"Framer", ^{
             [[theValue(testingView.frame) should] equal:theValue(CGRectMake(200, 10, 100, 480))];
         });
         
+        it(@"for 'bottom' and 'height' configurations together", ^{
+            [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                framer.super_centerX(0);
+                framer.width(100).and.height(100);
+                framer.bottom(10);
+            }];
+            
+            [[theValue(testingView.frame) should] equal:theValue(CGRectMake(200, 390, 100, 100))];
+        });
+        
         it(@"for 'right' and 'left' configurations together", ^{
             [testingView installFrames:^(NUIFramer * _Nonnull framer) {
                 framer.super_centerY(0);
@@ -44,6 +54,16 @@ describe(@"Framer", ^{
             }];
             
             [[theValue(testingView.frame) should] equal:theValue(CGRectMake(10, 200, 480, 100))];
+        });
+        
+        it(@"for 'right' and 'width' configurations together", ^{
+            [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                framer.super_centerY(0);
+                framer.height(100).and.width(100);
+                framer.right(10);
+            }];
+            
+            [[theValue(testingView.frame) should] equal:theValue(CGRectMake(390, 200, 100, 100))];
         });
         
     });
