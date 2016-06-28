@@ -32,7 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  *	Conveniently properties for setting flexible relations.
- *  Example 
+ *  @code
             [self.view1 installFrames:^(NUIFramer *framer) {
                 framer.width(40).and.height(40);
                 framer.centerY_to(self.view2.bottom, 0);

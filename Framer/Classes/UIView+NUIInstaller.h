@@ -15,6 +15,6 @@
  *  Creates and configurates NUIFramer object for each view.
  *  @param installerBlock An installer block within which you can configurate frame relations.
  */
-- (void)installFrames:(void(^)(NUIFramer *_Nonnull framer))installerBlock;
+- (void)installFrames:(nonnull void(^)(NUIFramer *_Nonnull framer))installerBlock;
 
 @end
