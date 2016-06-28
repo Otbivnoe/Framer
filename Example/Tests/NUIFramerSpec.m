@@ -623,6 +623,42 @@ describe(@"Framer", ^{
             });
         });
         
+        /*
+            SIZE_TO_FIT
+         */
+        
+        context(@"sizeToFit", ^{
+            
+            specify(^{
+                UILabel *label = [[UILabel alloc] init];
+                label.text = @"Hello!";
+                [label installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.sizeToFit();
+                }];
+                
+                [[theValue(CGRectGetWidth(label.frame)) should] beGreaterThan:theValue(0)];
+                [[theValue(CGRectGetHeight(label.frame)) should] beGreaterThan:theValue(0)];
+            });
+        });
+        
+        /*
+            SIZE_THAT_FITS
+         */
+        
+        context(@"sizeThatFits", ^{
+            
+            specify(^{
+                UILabel *label = [[UILabel alloc] init];
+                label.text = @"Hello!";
+                [label installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.sizeThatFits(CGSizeMake(CGFLOAT_MAX, 0));
+                }];
+                
+                [[theValue(CGRectGetWidth(label.frame)) should] beGreaterThan:theValue(0)];
+                [[theValue(CGRectGetHeight(label.frame)) should] equal:0.0 withDelta:DBL_EPSILON];
+            });
+        });
+        
     });
 });
 

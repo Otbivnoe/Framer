@@ -39,9 +39,10 @@
 //    self.label2.text = @"ALL GOOOD";
 //    [self.view addSubview:self.label2];
 //    
-//    self.label3 = [[UILabel alloc] init];
-//    self.label3.text = @"HELLO AGAIN!";
-//    [self.view addSubview:self.label3];
+    self.label3 = [[UILabel alloc] init];
+    self.label3.text = @"HELLO AGAIN! HELLO AGAIN! HELLO AGAIN! HELLO AGAIN!";
+    self.label3.numberOfLines = 0;
+    [self.view addSubview:self.label3];
     
     
     self.view1 = [[UIView alloc] init];
@@ -53,16 +54,16 @@
     self.view3 = [[UIView alloc] init];
     self.view3.backgroundColor = [UIColor yellowColor];
     
+    self.view4 = [[UIView alloc] init];
+    self.view4.backgroundColor = [UIColor blackColor];
+    
     self.container = [[UIView alloc] init];
     self.container.backgroundColor = [UIColor blackColor];
     
-    [self.view addSubview:self.view1];
-    [self.view1 addSubview:self.view2];
-    [self.view addSubview:self.view3];
-
-    self.view1.frame = CGRectMake(100, 100, 300, 300);
-    self.view2.frame = CGRectMake(50, 50, 200, 200);
-    self.view3.frame = CGRectMake(0, 90, 50, 50);
+//    [self.view addSubview:self.view1];
+    [self.view addSubview:self.view4];
+//    [self.view1 addSubview:self.view2];
+//    [self.view addSubview:self.view3];
 }
 
 - (void)dealloc {
@@ -70,16 +71,25 @@
     NSLog(@"%s", __PRETTY_FUNCTION__);
 }
 
+//- (void)sizeToFitSize:(CGSize)size {
+//    
+//    CGSize fitSize = [self sizeThatFits:size];
+//    self.width = MIN(size.width, fitSize.width);
+//    self.height = MIN(size.height, fitSize.height);
+//}
+
 - (void)viewDidLayoutSubviews {
     
     [super viewDidLayoutSubviews];
     
-    [self.view3 installFrames:^(NUIFramer * _Nonnull framer) {
-        framer.centerX_to(self.view2, 0);
+
+    [self.view4 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.super_centerX(0);
+        framer.super_centerY(0);
+        framer.sizeToFit();
     }];
     
-    NSLog(@"frame = %@", NSStringFromCGRect(self.view3.frame));
-    
+
 //    [self.view1 installFrames:^(NUIFramer *framer) {
 //        framer.width(40);
 //        framer.height(40);

@@ -8,7 +8,6 @@
 
 #import "NUIFramer.h"
 #import "NUIHandler.h"
-#import "NUIAdditionalConfigurateFactory.h"
 
 #import "UIView+NUIAdditions.h"
 
@@ -24,6 +23,8 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 
 @property (nonatomic, nonnull) NSMutableArray <NUIHandler *> *handlers;
 @property (nonatomic) CGRect newRect;
+
+@property (nonatomic, weak, nullable) UIView *view;
 
 @end
 
@@ -77,12 +78,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 }
 
 - (void)configurateFrames {
-    
-    [[NUIAdditionalConfigurateFactory additionalConfigurates] enumerateObjectsUsingBlock:^(id<NUIConfigurateProtocol>  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if ([self.view isKindOfClass:obj.class]) {
-            [obj additionalConfigurateForFramer:self];
-        }
-    }];
+
     [self configurateOrderHandlers];
     
     [self.handlers enumerateObjectsUsingBlock:^(NUIHandler * _Nonnull handler, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -239,6 +235,30 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 
         [self setHighPriorityValue:CGRectGetWidth(frame) withType:NUIValueTypeWidth];
         [self setHighPriorityValue:CGRectGetHeight(frame) withType:NUIValueTypeHeight];
+        return self;
+    };
+}
+
+#pragma mark Fits
+
+- (NUIFramer *(^)())sizeToFit {
+    
+    return ^id() {
+        [self.view sizeToFit];
+        [self setHighPriorityValue:CGRectGetWidth(self.view.frame) withType:NUIValueTypeWidth];
+        [self setHighPriorityValue:CGRectGetHeight(self.view.frame) withType:NUIValueTypeHeight];
+        return self;
+    };
+}
+
+- (NUIFramer *(^)(CGSize size))sizeThatFits {
+    
+    return ^id(CGSize size) {
+        CGSize fitSize = [self.view sizeThatFits:size];
+        CGFloat width = MIN(size.width, fitSize.width);
+        CGFloat height = MIN(size.height, fitSize.height);
+        [self setHighPriorityValue:width withType:NUIValueTypeWidth];
+        [self setHighPriorityValue:height withType:NUIValueTypeHeight];
         return self;
     };
 }

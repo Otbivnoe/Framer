@@ -10,11 +10,6 @@
 
 @interface NUIFramer : NSObject
 
-/**
- *  The view for which installs relations.
- */
-@property (nonatomic, weak, nullable) UIView *view;
-
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -48,6 +43,18 @@ NS_ASSUME_NONNULL_BEGIN
  *  @warning You should not use 'bottom' and 'right' (relatively superview) configurations by subviews.
  */
 - (NUIFramer *(^)())container;
+
+/**
+    Resizes and moves the receiver view so it just encloses its subviews.
+    @see -sizeToFit method (UIKit)
+ */
+- (NUIFramer *(^)())sizeToFit;
+
+/**
+    Calculate the size that best fits the specified size.
+    @param size The size for best-fitting
+ */
+- (NUIFramer *(^)(CGSize size))sizeThatFits;
 
 /**
  *	Edges relations relatively other view. Possible to use these methods for superview.
