@@ -23,6 +23,10 @@ To install Framer, simply add the following line to your Podfile:
 pod "Framer"
 ```
 
+then add 
+```obj-c
+    #import <Framer/Framer.h>
+```
 # USAGE
 
 ##You can configure relations with superview very fast and convenient:
