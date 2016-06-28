@@ -20,6 +20,7 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
+		8421254F1D221E7800BE1AD4 /* NUIFramerRelationLogicSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8421254D1D221E5400BE1AD4 /* NUIFramerRelationLogicSpec.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
 		BDC99F5CFE578BAE0920B093 /* Pods_Framer_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 198782FAD2BB060BDFCF8919 /* Pods_Framer_Tests.framework */; };
 		DC09B46269BCD8A4437D05C7 /* Pods_Framer_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CCAB186612128F7D4FB8668 /* Pods_Framer_Example.framework */; };
@@ -59,6 +60,7 @@
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		63E46CAD2F3252C0278DE880 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		8421254D1D221E5400BE1AD4 /* NUIFramerRelationLogicSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NUIFramerRelationLogicSpec.m; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		8FE54081095DA06C9DEFF817 /* Pods-Framer_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Framer_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Framer_Example/Pods-Framer_Example.release.xcconfig"; sourceTree = "<group>"; };
 		9DFB9A089DC9D65E6209DE58 /* Framer.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Framer.podspec; path = ../Framer.podspec; sourceTree = "<group>"; };
@@ -157,6 +159,7 @@
 			isa = PBXGroup;
 			children = (
 				11F02ED81D1EC9E300347EA4 /* NUIFramerSpec.m */,
+				8421254D1D221E5400BE1AD4 /* NUIFramerRelationLogicSpec.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -401,6 +404,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11F02EDA1D1ECE5800347EA4 /* NUIFramerSpec.m in Sources */,
+				8421254F1D221E7800BE1AD4 /* NUIFramerRelationLogicSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
