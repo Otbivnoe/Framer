@@ -7,14 +7,24 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NUIFramer.h"
 
-@class NUIFramer;
 @interface UIView (NUIInstaller)
+
+NS_ASSUME_NONNULL_BEGIN
+
+@property (nonatomic, readonly) NSNumber *state;
+@property (nonatomic, readonly) NSMutableDictionary <NSNumber *, InstallerBlock> *stateConfigurator;
 
 /**
  *  Creates and configurates NUIFramer object for each view.
  *  @param installerBlock An installer block within which you can configurate frame relations.
  */
-- (void)installFrames:(nonnull void(^)(NUIFramer *_Nonnull framer))installerBlock;
+- (void)installFrames:(InstallerBlock)installerBlock;
+- (void)installFrames:(InstallerBlock)installerBlock forState:(NSNumber *)state;
+
+- (void)applyFramesForState:(NSNumber *)state;
+
+NS_ASSUME_NONNULL_END
 
 @end

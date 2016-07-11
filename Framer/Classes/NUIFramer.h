@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class NUIFramer;
+
+typedef void (^InstallerBlock)(NUIFramer *_Nonnull framer);
+
 @interface NUIFramer : NSObject
 
 NS_ASSUME_NONNULL_BEGIN
@@ -87,7 +91,10 @@ NS_ASSUME_NONNULL_BEGIN
  *  @param installerBlock An installer block within which you can configurate frame relations.
  *  @see -installFrames: (UIView+NUIInstaller.h)
  */
-+ (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock;
++ (void)configurateView:(UIView *)view withInstallerBlock:(InstallerBlock)installerBlock;
++ (void)configurateView:(UIView *)view forState:(NSNumber *)state withInstallerBlock:(InstallerBlock)installerBlock;
+
++ (void)applyState:(NSNumber *)state forView:(UIView *)view;
 
 NS_ASSUME_NONNULL_END
 

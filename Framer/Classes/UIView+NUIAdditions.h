@@ -46,6 +46,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, readonly) UIView *centerX;
 @property (nonatomic, readonly) UIView *centerY;
 
+- (void)applyState:(NSNumber *)state;
+
 @end
 
 NS_ASSUME_NONNULL_END

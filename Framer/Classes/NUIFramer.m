@@ -10,6 +10,7 @@
 #import "NUIHandler.h"
 
 #import "UIView+NUIAdditions.h"
+#import "UIView+NUIInstaller.h"
 
 typedef NS_ENUM(NSInteger, NUIValueType) {
     NUIValueTypeWidth,
@@ -43,19 +44,32 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 
 #pragma mark - Configurate methods
 
-+ (void)configurateView:(UIView *)view withInstallerBlock:(void(^)(NUIFramer *framer))installerBlock {
++ (void)applyState:(NSNumber *)state forView:(UIView *)view {
     
-    NUIFramer *framer = [[NUIFramer alloc] init];
-    framer.view = view;
     
-    [framer startConfigurate];
-    
-    if (installerBlock) {
-        installerBlock(framer);
-    }
-    [framer configurateFrames];
 }
 
++ (void)configurateView:(UIView *)view withInstallerBlock:(InstallerBlock)installerBlock {
+    
+    [self configurateView:view forState:@0 withInstallerBlock:installerBlock];
+}
+
++ (void)configurateView:(UIView *)view forState:(NSNumber *)state withInstallerBlock:(InstallerBlock)installerBlock {
+    
+    view.stateConfigurator[state] = installerBlock;
+    
+    if (view.state == state) {
+        NUIFramer *framer = [[NUIFramer alloc] init];
+        framer.view = view;
+        
+        [framer startConfigurate];
+        
+        if (installerBlock) {
+            installerBlock(framer);
+        }
+        [framer configurateFrames];
+    }
+}
 
 - (void)startConfigurate {
     
