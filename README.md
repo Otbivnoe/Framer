@@ -130,6 +130,60 @@ So easy to do it with Framer :
     }];
 ```
 
+##States:
+
+It's very convenient use many states for animations, because you can just configure all states in one place and when needed change frame for view - just apply needed state! Awesome, is it?
+```obj-c
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    /* Configure frame for '0' state */
+    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.width(10);
+        framer.height(10);
+        framer.super_centerX(0).and.super_centerY(0);
+    }];
+    
+    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.width(40);
+        framer.height(40);
+        framer.super_centerX(0).and.super_centerY(0);
+    } forState:@1];
+    
+    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.width(100);
+        framer.height(100);
+        framer.super_centerX(0).and.super_centerY(0);
+    } forState:@2];
+}
+```
+
+set new state and animate it:
+```obj-c
+/* Next time when viewDidLayoutSubviews will be called, self.view1 configure frame for state 2. */
+    self.view1.state = @2;
+    [self.view setNeedsLayout];
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.view layoutIfNeeded];
+    }];
+```
+or apply new frame immediately:
+```obj-c
+    [UIView animateWithDuration:1.0 animations:^{
+        [self.view1 applyFrameForState:@2];
+    }];
+```
+
+
+## Updates:
+**v1.1**
+* Added 'nui' prefix to relations(left, right etc). 
+* Added possibility to configure frame for special state.
+
+**v1.0**
+* First release version. Configure frame blocks.
+
 ## TODO
 * Other platforms support
 * Swift support
