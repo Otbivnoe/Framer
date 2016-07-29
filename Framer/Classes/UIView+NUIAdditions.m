@@ -11,37 +11,37 @@
 
 @implementation UIView (NUIAdditions)
 
-- (UIView *)left {
+- (UIView *)nui_left {
     
     self.relationType = NUIRelationTypeLeft;
     return self;
 }
 
-- (UIView *)right {
+- (UIView *)nui_right {
     
     self.relationType = NUIRelationTypeRight;
     return self;
 }
 
-- (UIView *)top {
+- (UIView *)nui_top {
     
     self.relationType = NUIRelationTypeTop;
     return self;
 }
 
-- (UIView *)bottom {
+- (UIView *)nui_bottom {
     
     self.relationType = NUIRelationTypeBottom;
     return self;
 }
 
-- (UIView *)centerX {
+- (UIView *)nui_centerX {
     
     self.relationType = NUIRelationTypeCenterX;
     return self;
 }
 
-- (UIView *)centerY {
+- (UIView *)nui_centerY {
     
     self.relationType = NUIRelationTypeCenterY;
     return self;

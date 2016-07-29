@@ -35,16 +35,16 @@ NS_ASSUME_NONNULL_BEGIN
  *  @code
             [self.view1 installFrames:^(NUIFramer *framer) {
                 framer.width(40).and.height(40);
-                framer.centerY_to(self.view2.bottom, 0);
-                framer.centerX_to(self.view2.centerX, 0);
+                framer.centerY_to(self.view2.nui_bottom, 0);
+                framer.centerX_to(self.view2.nui_centerX, 0);
             }];
  */
-@property (nonatomic, readonly) UIView *left;
-@property (nonatomic, readonly) UIView *right;
-@property (nonatomic, readonly) UIView *top;
-@property (nonatomic, readonly) UIView *bottom;
-@property (nonatomic, readonly) UIView *centerX;
-@property (nonatomic, readonly) UIView *centerY;
+@property (nonatomic, readonly) UIView *nui_left;
+@property (nonatomic, readonly) UIView *nui_right;
+@property (nonatomic, readonly) UIView *nui_top;
+@property (nonatomic, readonly) UIView *nui_bottom;
+@property (nonatomic, readonly) UIView *nui_centerX;
+@property (nonatomic, readonly) UIView *nui_centerY;
 
 - (void)applyState:(NSNumber *)state;
 

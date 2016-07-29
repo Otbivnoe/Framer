@@ -158,7 +158,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(CGFloat))left {
 
     return ^id(CGFloat inset) {
-        return self.left_to(self.view.superview.left, inset);
+        return self.left_to(self.view.superview.nui_left, inset);
     };
 }
 
@@ -200,7 +200,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(CGFloat))top {
     
     return ^id(CGFloat inset) {
-        return self.top_to(self.view.superview.top, inset);
+        return self.top_to(self.view.superview.nui_top, inset);
     };
 }
 
@@ -302,7 +302,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(CGFloat))bottom {
 
     return ^id(CGFloat inset) {
-        return self.bottom_to(self.view.superview.bottom, inset);
+        return self.bottom_to(self.view.superview.nui_bottom, inset);
     };
 }
 
@@ -360,7 +360,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(CGFloat))right {
 
     return ^id(CGFloat inset) {
-        return self.right_to(self.view.superview.right, inset);
+        return self.right_to(self.view.superview.nui_right, inset);
     };
 }
 
@@ -420,7 +420,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(CGFloat inset))super_centerX {
     
     return ^id(CGFloat inset) {
-        return self.centerX_to(self.view.superview.centerX, inset);
+        return self.centerX_to(self.view.superview.nui_centerX, inset);
     };
 }
 
@@ -460,7 +460,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(CGFloat inset))super_centerY {
     
     return ^id(CGFloat inset) {
-        return self.centerY_to(self.view.superview.centerY, inset);
+        return self.centerY_to(self.view.superview.nui_centerY, inset);
     };
 }
 
