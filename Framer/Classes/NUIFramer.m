@@ -44,11 +44,6 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 
 #pragma mark - Configurate methods
 
-+ (void)applyState:(NSNumber *)state forView:(UIView *)view {
-    
-    
-}
-
 + (void)configurateView:(UIView *)view withInstallerBlock:(InstallerBlock)installerBlock {
     
     [self configurateView:view forState:@0 withInstallerBlock:installerBlock];

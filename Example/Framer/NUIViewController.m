@@ -46,6 +46,7 @@
     
     
     self.view1 = [[UIView alloc] init];
+    self.view1.state = @2;
     self.view1.backgroundColor = [UIColor redColor];
     
     self.view2 = [[UIView alloc] init];
@@ -60,10 +61,19 @@
     self.container = [[UIView alloc] init];
     self.container.backgroundColor = [UIColor blackColor];
     
-//    [self.view addSubview:self.view1];
-    [self.view addSubview:self.view4];
+    [self.view addSubview:self.view1];
+//    [self.view addSubview:self.view4];
 //    [self.view1 addSubview:self.view2];
 //    [self.view addSubview:self.view3];
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        
+        self.view1.state = @0;
+        [self.view setNeedsLayout];
+        [UIView animateWithDuration:1.0 animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    });
 }
 
 - (void)dealloc {
@@ -83,19 +93,32 @@
     [super viewDidLayoutSubviews];
     
 
-    [self.view4 installFrames:^(NUIFramer * _Nonnull framer) {
-        framer.super_centerX(0);
-        framer.super_centerY(0);
-        framer.sizeToFit();
-    }];
-    
-
-//    [self.view1 installFrames:^(NUIFramer *framer) {
-//        framer.width(40);
-//        framer.height(40);
-//        framer.top(0).and.left(10);
+//    [self.view4 installFrames:^(NUIFramer * _Nonnull framer) {
+//        framer.super_centerX(0);
+//        framer.super_centerY(0);
+//        framer.sizeToFit();
 //    }];
-//    
+    
+    
+    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.width(10);
+        framer.height(10);
+        framer.super_centerX(0).and.super_centerY(0);
+    } forState:@0];
+    
+    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.width(40);
+        framer.height(40);
+        framer.super_centerX(0).and.super_centerY(0);
+    } forState:@1];
+    
+    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.width(100);
+        framer.height(100);
+        framer.super_centerX(0).and.super_centerY(0);
+    } forState:@2];
+    
+//
 //    [self.view2 installFrames:^(NUIFramer *framer) {
 //        framer.width(20);
 //        framer.height(20);

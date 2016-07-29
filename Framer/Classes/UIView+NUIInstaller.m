@@ -12,7 +12,6 @@
 
 @interface UIView (NUIInstaller)
 
-@property (nonatomic, nonnull) NSNumber *state;
 @property (nonatomic, nonnull) NSMutableDictionary <NSNumber *, InstallerBlock> *stateConfigurator;
 
 @end
@@ -35,12 +34,12 @@
     [NUIFramer configurateView:self forState:state withInstallerBlock:installerBlock];
 }
 
-- (void)applyFramesForState:(nonnull NSNumber *)state {
+- (void)applyFrameForState:(nonnull NSNumber *)state {
     
-    NSAssert(self.stateConfigurator[state] == nil, @"Wrong state!");
+    NSAssert(self.stateConfigurator[state] != nil, @"Configuration block for this state doesn't exist.");
+    self.state = state;
     [NUIFramer configurateView:self forState:state withInstallerBlock:self.stateConfigurator[state]];
 }
-
 
 #pragma mark - Runtime
 
@@ -60,8 +59,9 @@
 }
 
 - (NSNumber *)state {
-    
-    return objc_getAssociatedObject(self, @selector(state));
+
+    NSNumber *state = objc_getAssociatedObject(self, @selector(state));
+    return (state) ?: @0;
 }
 
 @end

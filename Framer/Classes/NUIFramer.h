@@ -56,7 +56,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
     Calculate the size that best fits the specified size.
-    @param size The size for best-fitting
+    @param size The size for best-fitting.
  */
 - (NUIFramer *(^)(CGSize size))sizeThatFits;
 
@@ -93,8 +93,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)configurateView:(UIView *)view withInstallerBlock:(InstallerBlock)installerBlock;
 + (void)configurateView:(UIView *)view forState:(NSNumber *)state withInstallerBlock:(InstallerBlock)installerBlock;
-
-+ (void)applyState:(NSNumber *)state forView:(UIView *)view;
 
 NS_ASSUME_NONNULL_END
 
