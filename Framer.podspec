@@ -8,7 +8,7 @@ Framer is a good framework which wraps working with frames with a nice chaining 
 
   s.homepage         = 'https://github.com/Otbivnoe/Framer'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
-  s.author           = { 'Nikita Ermolenko' => 'nikita.ermolenko@rosberry.com' }
+  s.author           = { 'Nikita Ermolenko' => 'gnod94@gmail.com' }
   s.source           = { :git => 'https://github.com/Otbivnoe/Framer.git', :tag => s.version.to_s }
   s.requires_arc     = true
 
