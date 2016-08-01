@@ -46,7 +46,7 @@
     
     
     self.view1 = [[UIView alloc] init];
-    self.view1.state = @2;
+    self.view1.nui_state = @2;
     self.view1.backgroundColor = [UIColor redColor];
     
     self.view2 = [[UIView alloc] init];
@@ -68,7 +68,7 @@
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         
-        self.view1.state = @0;
+        self.view1.nui_state = @0;
         [self.view setNeedsLayout];
         [UIView animateWithDuration:1.0 animations:^{
             [self.view layoutIfNeeded];

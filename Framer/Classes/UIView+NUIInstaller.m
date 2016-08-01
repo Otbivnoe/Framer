@@ -37,7 +37,7 @@
 - (void)applyFrameForState:(nonnull NSNumber *)state {
     
     NSAssert(self.stateConfigurator[state] != nil, @"Configuration block for this state doesn't exist.");
-    self.state = state;
+    self.nui_state = state;
     [NUIFramer configurateView:self forState:state withInstallerBlock:self.stateConfigurator[state]];
 }
 
@@ -53,15 +53,15 @@
     return objc_getAssociatedObject(self, @selector(stateConfigurator));
 }
 
-- (void)setState:(NSNumber *)state {
+- (void)setNui_state:(NSNumber *)nui_state {
     
-    objc_setAssociatedObject(self, @selector(state), state, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(nui_state), nui_state, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
-- (NSNumber *)state {
+- (NSNumber *)nui_state {
 
-    NSNumber *state = objc_getAssociatedObject(self, @selector(state));
-    return (state) ?: @0;
+    NSNumber *nui_state = objc_getAssociatedObject(self, @selector(nui_state));
+    return (nui_state) ?: @0;
 }
 
 @end

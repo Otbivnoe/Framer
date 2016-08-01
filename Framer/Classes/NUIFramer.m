@@ -53,7 +53,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     
     view.stateConfigurator[state] = installerBlock;
     
-    if (view.state == state) {
+    if (view.nui_state == state) {
         NUIFramer *framer = [[NUIFramer alloc] init];
         framer.view = view;
         

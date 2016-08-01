@@ -26,7 +26,7 @@ describe(@"Framer", ^{
     
     it(@"should correctly configures frame for any available state", ^{
         
-        testingView.state = @0;
+        testingView.nui_state = @0;
         
         [testingView installFrames:^(NUIFramer * _Nonnull framer) {
             framer.width(10);

@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /*
     Apply new configuration state without frame updating.
  */
-@property (nonatomic) NSNumber *state;
+@property (nonatomic) NSNumber *nui_state;
 
 /**
  *  Creates and configurates NUIFramer object for each view.
