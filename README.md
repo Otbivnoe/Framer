@@ -162,7 +162,7 @@ It's very convenient use many states for animations, because you can just config
 set new state and animate it:
 ```obj-c
 /* Next time when viewDidLayoutSubviews will be called, self.view1 configure frame for state 2. */
-    self.view1.state = @2;
+    self.view1.nui_state = @2;
     [self.view setNeedsLayout];
     [UIView animateWithDuration:1.0 animations:^{
         [self.view layoutIfNeeded];
