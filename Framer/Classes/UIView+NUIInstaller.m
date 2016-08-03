@@ -10,12 +10,6 @@
 
 #import <objc/runtime.h>
 
-@interface UIView (NUIInstaller)
-
-@property (nonatomic, nonnull) NSMutableDictionary <NSNumber *, InstallerBlock> *stateConfigurator;
-
-@end
-
 @implementation UIView (NUIInstaller)
 
 #pragma mark - Framer
