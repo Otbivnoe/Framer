@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'Framer'
-  s.version          = '1.1.2'
+  s.version          = '1.1.3'
   s.summary          = 'Comfortable syntax for working with frames'
   s.description      = <<-DESC
 Framer is a good framework which wraps working with frames with a nice chaining syntax.
