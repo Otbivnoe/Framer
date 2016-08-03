@@ -168,12 +168,6 @@ set new state and animate it:
         [self.view layoutIfNeeded];
     }];
 ```
-or apply new frame immediately:
-```obj-c
-    [UIView animateWithDuration:1.0 animations:^{
-        [self.view1 applyFrameForState:@2];
-    }];
-```
 
 
 ## Updates:
