@@ -13,8 +13,6 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@property (nonatomic, readonly) NSMutableDictionary <NSNumber *, InstallerBlock> *stateConfigurator;
-
 /*
     Apply new configuration state without frame updating.
  */
@@ -26,12 +24,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)installFrames:(InstallerBlock)installerBlock;
 - (void)installFrames:(InstallerBlock)installerBlock forState:(NSNumber *)state;
-
-/*
- * Configure frame for current state immediately.
- * @param state A state for which applies 'installer block'.
- */
-- (void)applyFrameForState:(NSNumber *)state;
 
 NS_ASSUME_NONNULL_END
 

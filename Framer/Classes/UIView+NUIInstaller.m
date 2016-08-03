@@ -26,32 +26,11 @@
 }
 
 - (void)installFrames:(InstallerBlock)installerBlock forState:(nonnull NSNumber *)state {
-    
-    if (!self.stateConfigurator) {
-        self.stateConfigurator = [[NSMutableDictionary alloc] init];
-    }
-    
+
     [NUIFramer configurateView:self forState:state withInstallerBlock:installerBlock];
 }
 
-- (void)applyFrameForState:(nonnull NSNumber *)state {
-    
-    NSAssert(self.stateConfigurator[state] != nil, @"Configuration block for this state doesn't exist.");
-    self.nui_state = state;
-    [NUIFramer configurateView:self forState:state withInstallerBlock:self.stateConfigurator[state]];
-}
-
 #pragma mark - Runtime
-
-- (void)setStateConfigurator:(NSMutableDictionary<NSNumber *, InstallerBlock> *)stateConfigurator {
-    
-    objc_setAssociatedObject(self, @selector(stateConfigurator), stateConfigurator, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (NSMutableDictionary<NSNumber *,InstallerBlock> *)stateConfigurator {
-    
-    return objc_getAssociatedObject(self, @selector(stateConfigurator));
-}
 
 - (void)setNui_state:(NSNumber *)nui_state {
     

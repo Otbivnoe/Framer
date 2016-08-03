@@ -103,20 +103,21 @@
     [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
         framer.width(10);
         framer.height(10);
+        framer.top_to(self.view, 10);
         framer.super_centerX(0).and.super_centerY(0);
     } forState:@0];
     
-    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
-        framer.width(40);
-        framer.height(40);
-        framer.super_centerX(0).and.super_centerY(0);
-    } forState:@1];
-    
-    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
-        framer.width(100);
-        framer.height(100);
-        framer.super_centerX(0).and.super_centerY(0);
-    } forState:@2];
+//    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+//        framer.width(40);
+//        framer.height(40);
+//        framer.super_centerX(0).and.super_centerY(0);
+//    } forState:@1];
+//    
+//    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+//        framer.width(100);
+//        framer.height(100);
+//        framer.super_centerX(0).and.super_centerY(0);
+//    } forState:@2];
     
 //
 //    [self.view2 installFrames:^(NUIFramer *framer) {
