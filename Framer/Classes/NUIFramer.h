@@ -79,6 +79,12 @@ NS_ASSUME_NONNULL_BEGIN
 - (NUIFramer *(^)(UIView *view, CGFloat inset))centerY_to;
 
 /**
+ *	Just set needed x and y for center.
+ */
+- (NUIFramer *(^)(CGFloat x))centerX;
+- (NUIFramer *(^)(CGFloat y))centerY;
+
+/**
  *	Center relations relatively superview.
  *  @param inset Additional inset between center of self.view and center of superview.
  */

@@ -209,6 +209,21 @@ describe(@"Framer", ^{
         });
         
         /*
+            Just center_x and center_y
+         */
+        
+        context(@"center_x and center_y", ^{
+            specify(^{
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.centerX(30);
+                    framer.centerY(10);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(5, -15, 50, 50))];
+            });
+        });
+        
+        /*
             BOTTOM_TO
          */
         

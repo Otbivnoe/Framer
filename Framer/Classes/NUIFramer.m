@@ -410,6 +410,40 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 
 #pragma mark Center X relations
 
+- (NUIFramer *(^)(CGFloat))centerX {
+    
+    return ^id(CGFloat x) {
+        
+        __weak typeof(self) weakSelf = self;
+
+        dispatch_block_t handler = ^ {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            CGRect frame = strongSelf.newRect;
+            frame.origin.x = x - CGRectGetWidth(frame)/2;
+            strongSelf.newRect = frame;
+        };
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
+        return self;
+    };
+}
+
+- (NUIFramer *(^)(CGFloat))centerY {
+    
+    return ^id(CGFloat y) {
+        
+        __weak typeof(self) weakSelf = self;
+
+        dispatch_block_t handler = ^ {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            CGRect frame = strongSelf.newRect;
+            frame.origin.y = y - CGRectGetHeight(frame)/2;
+            strongSelf.newRect = frame;
+        };
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityLow]];
+        return self;
+    };
+}
+
 - (NUIFramer *(^)(CGFloat inset))super_centerX {
     
     return ^id(CGFloat inset) {
