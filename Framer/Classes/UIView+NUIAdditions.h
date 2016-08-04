@@ -13,6 +13,8 @@
  * @brief A list of relations.
  */
 typedef NS_ENUM(NSInteger, NUIRelationType) {
+    NUIRelationTypeWidth,
+    NUIRelationTypeHeight,
     NUIRelationTypeLeft,
     NUIRelationTypeRight,
     NUIRelationTypeTop,
@@ -39,6 +41,8 @@ NS_ASSUME_NONNULL_BEGIN
                 framer.centerX_to(self.view2.nui_centerX, 0);
             }];
  */
+@property (nonatomic, readonly) UIView *nui_width;
+@property (nonatomic, readonly) UIView *nui_height;
 @property (nonatomic, readonly) UIView *nui_left;
 @property (nonatomic, readonly) UIView *nui_right;
 @property (nonatomic, readonly) UIView *nui_top;

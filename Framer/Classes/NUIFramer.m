@@ -85,7 +85,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 }
 
 - (void)configurateFrames {
-
+    
     [self configurateOrderHandlers];
     
     [self.handlers enumerateObjectsUsingBlock:^(NUIHandler * _Nonnull handler, NSUInteger idx, BOOL * _Nonnull stop) {
@@ -112,12 +112,44 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     };
 }
 
+- (NUIFramer *(^)(UIView *, CGFloat))width_to {
+    
+    return ^id(UIView * view, CGFloat multiplier) {
+        if (view != self.view) {
+            CGFloat width = [self sizeForCurrentRelationTypeByView:view] * multiplier;
+            [self setHighPriorityValue:width withType:NUIValueTypeWidth];
+        }
+        return self;
+    };
+}
+
 - (NUIFramer* (^)(CGFloat))height {
     
     return ^id(CGFloat height) {
         [self setHighPriorityValue:height withType:NUIValueTypeHeight];
         return self;
     };
+}
+
+- (NUIFramer *(^)(UIView *, CGFloat))height_to {
+    
+    return ^id(UIView * view, CGFloat multiplier) {
+        if (view != self.view) {
+            CGFloat height = [self sizeForCurrentRelationTypeByView:view] * multiplier;
+            [self setHighPriorityValue:height withType:NUIValueTypeHeight];
+        }
+        return self;
+    };
+}
+
+- (CGFloat)sizeForCurrentRelationTypeByView:(UIView *)view {
+    
+    if (view.relationType == NUIRelationTypeWidth) {
+        return CGRectGetWidth(view.bounds);
+    } else if (view.relationType == NUIRelationTypeHeight) {
+        return CGRectGetHeight(view.bounds);
+    }
+    return 0;
 }
 
 - (void)setHighPriorityValue:(CGFloat)value withType:(NUIValueType)type {

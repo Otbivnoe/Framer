@@ -27,6 +27,9 @@ NS_ASSUME_NONNULL_BEGIN
 - (NUIFramer *(^)(CGFloat width))width;
 - (NUIFramer *(^)(CGFloat height))height;
 
+- (NUIFramer *(^)(UIView *view, CGFloat multiplier))width_to;
+- (NUIFramer *(^)(UIView *view, CGFloat multiplier))height_to;
+
 /**
  *  Edges relations relatively superview.
  *  @param inset Additional inset between self.view and superview.

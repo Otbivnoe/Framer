@@ -11,6 +11,18 @@
 
 @implementation UIView (NUIAdditions)
 
+- (UIView *)nui_width {
+    
+    self.relationType = NUIRelationTypeWidth;
+    return self;
+}
+
+- (UIView *)nui_height {
+    
+    self.relationType = NUIRelationTypeHeight;
+    return self;
+}
+
 - (UIView *)nui_left {
     
     self.relationType = NUIRelationTypeLeft;
