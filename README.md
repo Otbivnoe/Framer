@@ -74,8 +74,8 @@ So easy to do it with Framer :
     
     [self.view2 installFrames:^(NUIFramer * _Nonnull framer) {
         framer.width(50).and.height(50);
-        framer.bottom_to(self.view1.top, 0);
-        framer.left_to(self.view1.right, 0);
+        framer.bottom_to(self.view1.nui_top, 0);
+        framer.left_to(self.view1.nui_right, 0);
     }];
 ```
 #NOTE
@@ -92,7 +92,7 @@ So easy to do it with Framer :
 
 ```obj-c
     [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
-        framer.bottom_to(self.view1.top, 0);
+        framer.bottom_to(self.view1.nui_top, 0);
     }];
 ```
 
@@ -119,7 +119,7 @@ So easy to do it with Framer :
     }];
     
     [self.label2 installFrames:^(NUIFramer * _Nonnull framer) {
-        framer.top_to(self.label1.bottom, 0).and.left(0);
+        framer.top_to(self.label1.nui_bottom, 0).and.left(0);
         framer.sizeToFit();
     }];
     
