@@ -46,7 +46,6 @@
     
     
     self.view1 = [[UIView alloc] init];
-    self.view1.nui_state = @2;
     self.view1.backgroundColor = [UIColor redColor];
     
     self.view2 = [[UIView alloc] init];
@@ -62,18 +61,8 @@
     self.container.backgroundColor = [UIColor blackColor];
     
     [self.view addSubview:self.view1];
-//    [self.view addSubview:self.view4];
-//    [self.view1 addSubview:self.view2];
-//    [self.view addSubview:self.view3];
+    [self.view1 addSubview:self.view2];
     
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        
-        self.view1.nui_state = @0;
-        [self.view setNeedsLayout];
-        [UIView animateWithDuration:1.0 animations:^{
-            [self.view layoutIfNeeded];
-        }];
-    });
 }
 
 - (void)dealloc {
@@ -101,11 +90,15 @@
     
     
     [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
-        framer.width(10);
-        framer.height(10);
-        framer.top_to(self.view, 10);
+        framer.width(50);
+        framer.height(150);
         framer.super_centerX(0).and.super_centerY(0);
-    } forState:@0];
+    }];
+    
+    [self.view2 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.right(10).left(10);
+        framer.height_to(self.view2.nui_width, 1);
+    }];
     
 //    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
 //        framer.width(40);

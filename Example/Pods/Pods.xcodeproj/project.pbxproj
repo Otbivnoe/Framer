@@ -17,6 +17,8 @@
 		0D83B7FC95847F501EE3EA71FB1C8D74 /* KWNotificationMatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 3206B0EF67F35A9C0AA4378C55FADED9 /* KWNotificationMatcher.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0E6AC8A063C8CEFA16525C8265BEE435 /* KWWorkarounds.h in Headers */ = {isa = PBXBuildFile; fileRef = 32037D9D47742D376B9D5F547A877DA9 /* KWWorkarounds.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0E75B94E436B8FB46A4B193983D7ABF3 /* KWExampleSuite.h in Headers */ = {isa = PBXBuildFile; fileRef = 4C1C3863CCF96EDD6941773CC69EFFA0 /* KWExampleSuite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		11DE039B1D55C1C600CF1247 /* NUIHandlerInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 11DE03991D55C1C600CF1247 /* NUIHandlerInfo.h */; };
+		11DE039C1D55C1C600CF1247 /* NUIHandlerInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 11DE039A1D55C1C600CF1247 /* NUIHandlerInfo.m */; };
 		12C49C3B0F779F61F9EFA5F3E6A6C5BD /* KWExistVerifier.m in Sources */ = {isa = PBXBuildFile; fileRef = 871C44FE69C992D8A93E3ABFD871C4C7 /* KWExistVerifier.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		1467305E92437AF23051250723B38C0A /* KWAfterEachNode.h in Headers */ = {isa = PBXBuildFile; fileRef = 0D4231E2CE9493759EE9354A8DAC0314 /* KWAfterEachNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		148AB29095DC893EBF4DF796DAD61A77 /* KWBeBetweenMatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = F003ACEA82F2E788B0107041DEF1B410 /* KWBeBetweenMatcher.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
@@ -252,6 +254,8 @@
 		1056DF8F71CDD4BAA8028EB3AE9B7AD5 /* KWFutureObject.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWFutureObject.m; path = Classes/Core/KWFutureObject.m; sourceTree = "<group>"; };
 		106A79C1509D644004CE537555452A7D /* KWBeEmptyMatcher.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWBeEmptyMatcher.h; path = Classes/Matchers/KWBeEmptyMatcher.h; sourceTree = "<group>"; };
 		11870FFA1ED8700F13B209E425193F32 /* Pods-Framer_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Framer_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		11DE03991D55C1C600CF1247 /* NUIHandlerInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NUIHandlerInfo.h; sourceTree = "<group>"; };
+		11DE039A1D55C1C600CF1247 /* NUIHandlerInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NUIHandlerInfo.m; sourceTree = "<group>"; };
 		127847B9E661F9FE6395D5D622E4DD20 /* KWSpec.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWSpec.m; path = Classes/Core/KWSpec.m; sourceTree = "<group>"; };
 		13D9DAFB2784D6EAE6BBBA88DB64F44A /* KWGenericMatchEvaluator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = KWGenericMatchEvaluator.m; path = Classes/Matchers/KWGenericMatchEvaluator.m; sourceTree = "<group>"; };
 		180AA54C36A1CCC4F67D71DD9AB71C54 /* KWExampleNodeVisitor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = KWExampleNodeVisitor.h; path = Classes/Core/KWExampleNodeVisitor.h; sourceTree = "<group>"; };
@@ -737,6 +741,8 @@
 				B826D9C278988F022DC9149E671468E0 /* NUIFramer.m */,
 				53729205491EB75E477CE40E66FDDE82 /* NUIHandler.h */,
 				4CBFEC185A9E2CB8A472DA2B9CF2F53E /* NUIHandler.m */,
+				11DE03991D55C1C600CF1247 /* NUIHandlerInfo.h */,
+				11DE039A1D55C1C600CF1247 /* NUIHandlerInfo.m */,
 				AE9B6D16AF0F94ABDB12F60D3BE1E0EC /* UIView+NUIAdditions.h */,
 				937AD54E9964D81C2ECC989AE5AC5365 /* UIView+NUIAdditions.m */,
 				FB4E294457B8CCA358D55D4BD6C90B42 /* UIView+NUIInstaller.h */,
@@ -867,6 +873,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84E985157A4632A79971832A8E658975 /* Framer-umbrella.h in Headers */,
+				11DE039B1D55C1C600CF1247 /* NUIHandlerInfo.h in Headers */,
 				B1151424C2F32AF6AC57B93EBE0609D4 /* Framer.h in Headers */,
 				6CA1D97A843D7A3AAB4A12B2DF5014B9 /* NUIFramer.h in Headers */,
 				6196455EB32F935361360697B2E924AD /* NUIHandler.h in Headers */,
@@ -1211,6 +1218,7 @@
 				7F930DC774B47DAF661053EE69642C05 /* NUIHandler.m in Sources */,
 				4111CF69450BA8FE1E221CB415DF268C /* UIView+NUIAdditions.m in Sources */,
 				6DA23ABD579CF197ECEE4B6F31E6EE1F /* UIView+NUIInstaller.m in Sources */,
+				11DE039C1D55C1C600CF1247 /* NUIHandlerInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

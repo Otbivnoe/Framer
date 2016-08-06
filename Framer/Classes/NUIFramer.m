@@ -8,20 +8,17 @@
 
 #import "NUIFramer.h"
 #import "NUIHandler.h"
+#import "NUIHandlerInfo.h"
 
 #import "UIView+NUIAdditions.h"
 #import "UIView+NUIInstaller.h"
-
-typedef NS_ENUM(NSInteger, NUIValueType) {
-    NUIValueTypeWidth,
-    NUIValueTypeHeight
-};
 
 @interface NUIFramer ()
 
 @property (nonatomic, getter=isTopFrameInstalled) BOOL topFrameInstalled;
 @property (nonatomic, getter=isLeftFrameInstalled) BOOL leftFrameInstalled;
 
+@property (nonatomic, nonnull) NSMutableArray <NUIHandlerInfo *> *handlerInfos;
 @property (nonatomic, nonnull) NSMutableArray <NUIHandler *> *handlers;
 @property (nonatomic) CGRect newRect;
 
@@ -37,6 +34,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     
     self = [super init];
     if (self) {
+        _handlerInfos = [[NSMutableArray alloc] init];
         _handlers = [[NSMutableArray alloc] init];
     }
     return self;
@@ -94,6 +92,28 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     [self endConfigurate];
 }
 
+#pragma mark - Helpers
+
+- (NUIHandlerInfo *)infoForType:(NUIHandlerType)type {
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"handlerType == %@", @(type)];
+    return [self.handlerInfos filteredArrayUsingPredicate:predicate].firstObject;
+}
+
+- (CGFloat)valueForRelationType:(NUIRelationType)type forView:(UIView *)view {
+    
+    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
+    switch (type) {
+        case NUIRelationTypeTop:      return CGRectGetMinY(convertedRect);
+        case NUIRelationTypeBottom:   return CGRectGetMaxY(convertedRect);
+        case NUIRelationTypeCenterY:  return CGRectGetMidY(convertedRect);
+        case NUIRelationTypeCenterX:  return CGRectGetMidX(convertedRect);
+        case NUIRelationTypeRight:    return CGRectGetMaxX(convertedRect);
+        case NUIRelationTypeLeft:     return CGRectGetMinX(convertedRect);
+        default: return 0;
+    }
+}
+
 #pragma mark - Framer methods
 
 - (NUIFramer *)and {
@@ -107,7 +127,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer* (^)(CGFloat))width {
     
     return ^id(CGFloat width) {
-        [self setHighPriorityValue:width withType:NUIValueTypeWidth];
+        [self setHighPriorityValue:width withType:NUIHandlerTypeWidth];
         return self;
     };
 }
@@ -115,10 +135,46 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(UIView *, CGFloat))width_to {
     
     return ^id(UIView * view, CGFloat multiplier) {
-        if (view != self.view) {
-            CGFloat width = [self sizeForCurrentRelationTypeByView:view] * multiplier;
-            [self setHighPriorityValue:width withType:NUIValueTypeWidth];
-        }
+
+        __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
+        
+        dispatch_block_t handler = ^ {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            if (view != strongSelf.view) {
+                CGFloat width = [strongSelf sizeForView:view withRelationType:relationType] * multiplier;
+                [strongSelf setFrameValue:width type:NUIHandlerTypeWidth];
+            } else {
+                NUIHandlerInfo *heightInfo = [strongSelf infoForType:NUIHandlerTypeHeight];
+                if (heightInfo) {
+                    CGFloat width = [heightInfo.first floatValue];
+                    [strongSelf setFrameValue:width type:NUIHandlerTypeWidth];
+                } else {
+                    NUIHandlerInfo *topInfo = [strongSelf infoForType:NUIHandlerTypeTop];
+                    NUIHandlerInfo *bottomInfo = [strongSelf infoForType:NUIHandlerTypeBottom];
+                    
+                    if (topInfo && bottomInfo) {
+                        UIView *topView = topInfo.first;
+                        CGFloat topInset = [topInfo.second floatValue];
+                        NUIRelationType topRelationType = [topInfo.third integerValue];
+                        
+                        CGFloat topViewY = [strongSelf topRelationYForView:topView withInset:topInset relationType:topRelationType];
+                        
+                        UIView *bottomView = bottomInfo.first;
+                        CGFloat bottomInset = [bottomInfo.second floatValue];
+                        NUIRelationType bottomRelationType = [bottomInfo.third integerValue];
+                        
+                        CGFloat bottomViewY = [strongSelf valueForRelationType:bottomRelationType forView:bottomView] - bottomInset;
+                        
+                        [strongSelf setFrameValue:(bottomViewY - topViewY)*multiplier type:NUIHandlerTypeWidth];
+                    }
+                }
+            }
+        };
+        
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeWidth parameters:nil]];
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
 }
@@ -126,7 +182,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer* (^)(CGFloat))height {
     
     return ^id(CGFloat height) {
-        [self setHighPriorityValue:height withType:NUIValueTypeHeight];
+        [self setHighPriorityValue:height withType:NUIHandlerTypeHeight];
         return self;
     };
 }
@@ -134,48 +190,85 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 - (NUIFramer *(^)(UIView *, CGFloat))height_to {
     
     return ^id(UIView * view, CGFloat multiplier) {
-        if (view != self.view) {
-            CGFloat height = [self sizeForCurrentRelationTypeByView:view] * multiplier;
-            [self setHighPriorityValue:height withType:NUIValueTypeHeight];
-        }
+        
+        __weak typeof(self) weakSelf = self;
+        NUIRelationType relationType = view.relationType;
+        
+        dispatch_block_t handler = ^ {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            if (view != strongSelf.view) {
+                CGFloat height = [strongSelf sizeForView:view withRelationType:relationType] * multiplier;
+                [strongSelf setFrameValue:height type:NUIHandlerTypeHeight];
+            } else {
+                NUIHandlerInfo *widthInfo = [strongSelf infoForType:NUIHandlerTypeWidth];
+                if (widthInfo) {
+                    CGFloat height = [widthInfo.first floatValue];
+                    [strongSelf setFrameValue:height type:NUIHandlerTypeHeight];
+                } else {
+                    NUIHandlerInfo *leftInfo = [strongSelf infoForType:NUIHandlerTypeLeft];
+                    NUIHandlerInfo *rightInfo = [strongSelf infoForType:NUIHandlerTypeRight];
+                    
+                    if (leftInfo && rightInfo) {
+                        UIView *leftView = leftInfo.first;
+                        CGFloat leftInset = [leftInfo.second floatValue];
+                        NUIRelationType leftRelationType = [leftInfo.third integerValue];
+                        
+                        CGFloat leftViewX = [strongSelf leftRelationXForView:leftView withInset:leftInset relationType:leftRelationType];
+                        
+                        UIView *rightView = rightInfo.first;
+                        CGFloat rightInset = [rightInfo.second floatValue];
+                        NUIRelationType rightRelationType = [rightInfo.third integerValue];
+                        
+                        CGFloat rightViewX = [strongSelf valueForRelationType:rightRelationType forView:rightView] - rightInset;
+                        
+                        [strongSelf setFrameValue:(rightViewX - leftViewX)*multiplier type:NUIHandlerTypeHeight];
+                    }
+                }
+            }
+        };
+        
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeHeight parameters:nil]];
+        [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
 }
 
-- (CGFloat)sizeForCurrentRelationTypeByView:(UIView *)view {
+- (CGFloat)sizeForView:(UIView *)view withRelationType:(NUIRelationType)relationType {
     
-    if (view.relationType == NUIRelationTypeWidth) {
+    if (relationType == NUIRelationTypeWidth) {
         return CGRectGetWidth(view.bounds);
-    } else if (view.relationType == NUIRelationTypeHeight) {
+    } else if (relationType == NUIRelationTypeHeight) {
         return CGRectGetHeight(view.bounds);
     }
     return 0;
 }
 
-- (void)setHighPriorityValue:(CGFloat)value withType:(NUIValueType)type {
+- (void)setHighPriorityValue:(CGFloat)value withType:(NUIHandlerType)type {
     
     __weak typeof(self) weakSelf = self;
     
     dispatch_block_t handler = ^ {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        CGRect frame = [strongSelf setFrameValue:value type:type];
-        strongSelf.newRect = frame;
+        [strongSelf setFrameValue:value type:type];
     };
+    
+    [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:type parameters:@(value), nil]];
     [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
 }
 
-- (CGRect)setFrameValue:(CGFloat)value type:(NUIValueType)type {
+- (void)setFrameValue:(CGFloat)value type:(NUIHandlerType)type {
     
     CGRect frame = self.newRect;
     switch (type) {
-        case NUIValueTypeWidth:
+        case NUIHandlerTypeWidth:
             frame.size.width = value;
             break;
-        case NUIValueTypeHeight:
+        case NUIHandlerTypeHeight:
             frame.size.height = value;
             break;
     }
-    return frame;
+    self.newRect = frame;
 }
 
 #pragma mark Left relations
@@ -196,27 +289,22 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat x =  [strongSelf leftRelationXForView:view withInset:inset relationType:relationType];
+            CGFloat x = [strongSelf leftRelationXForView:view withInset:inset relationType:relationType];
             CGRect frame = strongSelf.newRect;
             frame.origin.x = x;
             strongSelf.newRect = frame;
             strongSelf.leftFrameInstalled = YES;
         };
+        
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeLeft parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
 }
 
 - (CGFloat)leftRelationXForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
-    
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat x = 0;
-    switch (relationType) {
-        case NUIRelationTypeLeft:     x = CGRectGetMinX(convertedRect); break;
-        case NUIRelationTypeRight:    x = CGRectGetMaxX(convertedRect); break;
-        case NUIRelationTypeCenterX:  x = CGRectGetMidX(convertedRect); break;
-        default:break;
-    }
+
+    CGFloat x = [self valueForRelationType:relationType forView:view];
     return x + inset;
 }
 
@@ -238,12 +326,14 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            CGFloat y =  [strongSelf topRelationYForView:view withInset:inset relationType:relationType];
+            CGFloat y = [strongSelf topRelationYForView:view withInset:inset relationType:relationType];
             CGRect frame = strongSelf.newRect;
             frame.origin.y = y;
             strongSelf.newRect = frame;
             strongSelf.topFrameInstalled = YES;
         };
+        
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeTop parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
@@ -251,14 +341,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 
 - (CGFloat)topRelationYForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
     
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat y = 0;
-    switch (relationType) {
-        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
-        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
-        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
-        default:break;
-    }
+    CGFloat y = [self valueForRelationType:relationType forView:view];
     return y + inset;
 }
 
@@ -272,8 +355,8 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
             frame = CGRectUnion(frame, subview.frame);
         }
 
-        [self setHighPriorityValue:CGRectGetWidth(frame) withType:NUIValueTypeWidth];
-        [self setHighPriorityValue:CGRectGetHeight(frame) withType:NUIValueTypeHeight];
+        [self setHighPriorityValue:CGRectGetWidth(frame) withType:NUIHandlerTypeWidth];
+        [self setHighPriorityValue:CGRectGetHeight(frame) withType:NUIHandlerTypeHeight];
         return self;
     };
 }
@@ -284,8 +367,8 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
     
     return ^id() {
         [self.view sizeToFit];
-        [self setHighPriorityValue:CGRectGetWidth(self.view.frame) withType:NUIValueTypeWidth];
-        [self setHighPriorityValue:CGRectGetHeight(self.view.frame) withType:NUIValueTypeHeight];
+        [self setHighPriorityValue:CGRectGetWidth(self.view.frame) withType:NUIHandlerTypeWidth];
+        [self setHighPriorityValue:CGRectGetHeight(self.view.frame) withType:NUIHandlerTypeHeight];
         return self;
     };
 }
@@ -296,8 +379,8 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         CGSize fitSize = [self.view sizeThatFits:size];
         CGFloat width = MIN(size.width, fitSize.width);
         CGFloat height = MIN(size.height, fitSize.height);
-        [self setHighPriorityValue:width withType:NUIValueTypeWidth];
-        [self setHighPriorityValue:height withType:NUIValueTypeHeight];
+        [self setHighPriorityValue:width withType:NUIHandlerTypeWidth];
+        [self setHighPriorityValue:height withType:NUIHandlerTypeHeight];
         return self;
     };
 }
@@ -337,46 +420,34 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         
         __weak typeof(self) weakSelf = self;
         NUIRelationType relationType = view.relationType;
-        
+
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             CGRect frame = strongSelf.newRect;
             if (!strongSelf.isTopFrameInstalled) {
-                CGFloat y =  [strongSelf bottomRelationYForView:view withInset:inset relationType:relationType];
+                CGFloat y = [strongSelf bottomRelationYForView:view withInset:inset relationType:relationType];
                 frame.origin.y = y;
             } else {
-                frame.size.height = [strongSelf bottomRelationHeightForView:view withInset:inset relationType:relationType];
+                frame.size.height = [self bottomRelationHeightForView:view withInset:inset relationType:relationType];;
             }
             strongSelf.newRect = frame;
         };
+        
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeBottom parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
     };
 }
 
 - (CGFloat)bottomRelationHeightForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
-    
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat height = 0;
-    switch (relationType) {
-        case NUIRelationTypeTop:      height = fabs(CGRectGetMinY(self.newRect) - CGRectGetMinY(convertedRect)); break;
-        case NUIRelationTypeBottom:   height = fabs(CGRectGetMinY(self.newRect) - CGRectGetMaxY(convertedRect)); break;
-        case NUIRelationTypeCenterY:  height = fabs(CGRectGetMinY(self.newRect) - CGRectGetMidY(convertedRect)); break;
-        default:break;
-    }
+
+    CGFloat height = fabs(CGRectGetMinY(self.newRect) - [self valueForRelationType:relationType forView:view]);
     return height - inset;
 }
 
 - (CGFloat)bottomRelationYForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
     
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat y = 0;
-    switch (relationType) {
-        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
-        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
-        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
-        default:break;
-    }
+    CGFloat y = [self valueForRelationType:relationType forView:view];
     return y - inset - CGRectGetHeight(self.newRect);
 }
 
@@ -395,7 +466,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
         
         __weak typeof(self) weakSelf = self;
         NUIRelationType relationType = view.relationType;
-        
+
         dispatch_block_t handler = ^ {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             CGRect frame = strongSelf.newRect;
@@ -403,38 +474,26 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
                 CGFloat x =  [strongSelf rightRelationXForView:view withInset:inset relationType:relationType];
                 frame.origin.x = x;
             } else {
-                frame.size.width = [strongSelf rightRelationWidthForView:view withInset:inset relationType:relationType];
+                frame.size.width = [self rightRelationWidthForView:view withInset:inset relationType:relationType];;
             }
             strongSelf.newRect = frame;
         };
+        
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeRight parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
     };
 }
 
 - (CGFloat)rightRelationWidthForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
-    
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat width = 0;
-    switch (relationType) {
-        case NUIRelationTypeRight:      width = fabs(CGRectGetMinX(self.newRect) - CGRectGetMaxX(convertedRect)); break;
-        case NUIRelationTypeLeft:       width = fabs(CGRectGetMinX(self.newRect) - CGRectGetMinX(convertedRect)); break;
-        case NUIRelationTypeCenterX:    width = fabs(CGRectGetMinX(self.newRect) - CGRectGetMidX(convertedRect)); break;
-        default:break;
-    }
+
+    CGFloat width = fabs(CGRectGetMinX(self.newRect) - [self valueForRelationType:relationType forView:view]);
     return width - inset;
 }
 
 - (CGFloat)rightRelationXForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
     
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat x = 0;
-    switch (relationType) {
-        case NUIRelationTypeRight:      x = CGRectGetMaxX(convertedRect); break;
-        case NUIRelationTypeLeft:       x = CGRectGetMinX(convertedRect); break;
-        case NUIRelationTypeCenterX:    x = CGRectGetMidX(convertedRect); break;
-        default:break;
-    }
+    CGFloat x = [self valueForRelationType:relationType forView:view];
     return x - inset - CGRectGetWidth(self.newRect);
 }
 
@@ -502,15 +561,8 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 }
 
 - (CGFloat)centerRelationXForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
-    
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat x = 0;
-    switch (relationType) {
-        case NUIRelationTypeRight:      x = CGRectGetMaxX(convertedRect); break;
-        case NUIRelationTypeLeft:       x = CGRectGetMinX(convertedRect); break;
-        case NUIRelationTypeCenterX:    x = CGRectGetMidX(convertedRect); break;
-        default:break;
-    }
+
+    CGFloat x = [self valueForRelationType:relationType forView:view];
     return x - CGRectGetWidth(self.newRect) / 2 - inset;
 }
 
@@ -543,14 +595,7 @@ typedef NS_ENUM(NSInteger, NUIValueType) {
 
 - (CGFloat)centerRelationYForView:(UIView *)view withInset:(CGFloat)inset relationType:(NUIRelationType)relationType {
     
-    CGRect convertedRect = [self.view.superview convertRect:view.frame fromView:view.superview];
-    CGFloat y = 0;
-    switch (relationType) {
-        case NUIRelationTypeTop:      y = CGRectGetMinY(convertedRect); break;
-        case NUIRelationTypeBottom:   y = CGRectGetMaxY(convertedRect); break;
-        case NUIRelationTypeCenterY:  y = CGRectGetMidY(convertedRect); break;
-        default:break;
-    }
+    CGFloat y = [self valueForRelationType:relationType forView:view];
     return y - CGRectGetHeight(self.newRect) / 2 - inset;
 }
 
