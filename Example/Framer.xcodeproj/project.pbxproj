@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		110A00F71D5637CE003D6B6F /* NUIFramerWidthHeightSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 110A00F51D5637B3003D6B6F /* NUIFramerWidthHeightSpec.m */; };
 		11A4E26D1D4BB1D5009A5DC0 /* NUIFramerStateSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 115D66B01D4BAB100019F767 /* NUIFramerStateSpec.m */; };
 		11F02EDA1D1ECE5800347EA4 /* NUIFramerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 11F02ED81D1EC9E300347EA4 /* NUIFramerSpec.m */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		0CCAB186612128F7D4FB8668 /* Pods_Framer_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Framer_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		110A00F51D5637B3003D6B6F /* NUIFramerWidthHeightSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NUIFramerWidthHeightSpec.m; sourceTree = "<group>"; };
 		115D66B01D4BAB100019F767 /* NUIFramerStateSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NUIFramerStateSpec.m; sourceTree = "<group>"; };
 		11F02ED81D1EC9E300347EA4 /* NUIFramerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NUIFramerSpec.m; sourceTree = "<group>"; };
 		198782FAD2BB060BDFCF8919 /* Pods_Framer_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Framer_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -163,6 +165,7 @@
 				11F02ED81D1EC9E300347EA4 /* NUIFramerSpec.m */,
 				8421254D1D221E5400BE1AD4 /* NUIFramerRelationLogicSpec.m */,
 				115D66B01D4BAB100019F767 /* NUIFramerStateSpec.m */,
+				110A00F51D5637B3003D6B6F /* NUIFramerWidthHeightSpec.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -504,6 +507,7 @@
 			files = (
 				11F02EDA1D1ECE5800347EA4 /* NUIFramerSpec.m in Sources */,
 				11A4E26D1D4BB1D5009A5DC0 /* NUIFramerStateSpec.m in Sources */,
+				110A00F71D5637CE003D6B6F /* NUIFramerWidthHeightSpec.m in Sources */,
 				8421254F1D221E7800BE1AD4 /* NUIFramerRelationLogicSpec.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

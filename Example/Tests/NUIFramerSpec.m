@@ -32,7 +32,7 @@ describe(@"Framer", ^{
         testingView.frame = frame;
     });
     
-    context(@"should correct configurate", ^{
+    context(@"should correctly configurate", ^{
         
         /*
             SUPER_CENTER_X
@@ -568,36 +568,6 @@ describe(@"Framer", ^{
                 }];
                 
                 [[theValue(testingView.frame) should] equal:theValue(CGRectMake(440, 0, 50, 50))];
-            });
-        });
-        
-        /*
-            WIDTH
-         */
-        
-        context(@"width relation", ^{
-            
-            specify(^{
-                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
-                    framer.width(400);
-                }];
-                
-                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 400, 50))];
-            });
-        });
-        
-        /*
-            HEIGHT
-         */
-        
-        context(@"height relation", ^{
-            
-            specify(^{
-                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
-                    framer.height(400);
-                }];
-                
-                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 50, 400))];
             });
         });
         
