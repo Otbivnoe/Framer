@@ -23,7 +23,6 @@
     info.handlerType = type;
     
     if (first) {
-        id eachObject;
         va_list argumentList;
         
         NSMutableArray *parameters = [[NSMutableArray alloc] init];

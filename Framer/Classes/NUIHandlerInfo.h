@@ -26,13 +26,13 @@ typedef NS_ENUM(NSUInteger, NUIHandlerType) {
 @property (nonatomic, nullable, readonly) id third;
 @property (nonatomic, nullable, readonly) id fourth;
 
-+ (instancetype)infoWithType:(NUIHandlerType)type parameters:(id)first, ... NS_REQUIRES_NIL_TERMINATION;
++ (nullable instancetype)infoWithType:(NUIHandlerType)type parameters:(id)first, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end
 
 
 @interface NUIHandlerInfo (ObjectSubscripting)
 
-- (id)objectAtIndexedSubscript:(NSUInteger)idx;
+- (nullable id)objectAtIndexedSubscript:(NSUInteger)idx;
 
 @end

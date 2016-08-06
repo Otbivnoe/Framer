@@ -267,6 +267,7 @@
         case NUIHandlerTypeHeight:
             frame.size.height = value;
             break;
+        default:break;
     }
     self.newRect = frame;
 }
