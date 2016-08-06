@@ -428,7 +428,7 @@
                 CGFloat y = [strongSelf bottomRelationYForView:view withInset:inset relationType:relationType];
                 frame.origin.y = y;
             } else {
-                frame.size.height = [self bottomRelationHeightForView:view withInset:inset relationType:relationType];;
+                frame.size.height = [strongSelf bottomRelationHeightForView:view withInset:inset relationType:relationType];;
             }
             strongSelf.newRect = frame;
         };
@@ -474,7 +474,7 @@
                 CGFloat x =  [strongSelf rightRelationXForView:view withInset:inset relationType:relationType];
                 frame.origin.x = x;
             } else {
-                frame.size.width = [self rightRelationWidthForView:view withInset:inset relationType:relationType];;
+                frame.size.width = [strongSelf rightRelationWidthForView:view withInset:inset relationType:relationType];;
             }
             strongSelf.newRect = frame;
         };
