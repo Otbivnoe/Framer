@@ -78,6 +78,26 @@ So easy to do it with Framer :
         framer.left_to(self.view1.nui_right, 0);
     }];
 ```
+
+... or maybe so? 
+
+![alt Framer](http://i.imgur.com/gGRCOBU.png)
+
+```obj-c
+    [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.width(100);
+        framer.height(100);
+        framer.super_centerX(0).and.super_centerY(0);
+    }];
+    
+    [self.view2 installFrames:^(NUIFramer * _Nonnull framer) {
+        framer.top(10);
+        framer.bottom(10);
+        framer.left(10);
+        framer.width_to(self.view2.nui_height, 0.5); // height*0.5
+    }];
+```
+
 #NOTE
 **That's important to point out relations for two views.**
 
@@ -171,6 +191,10 @@ set new state and animate it:
 
 
 ## Updates:
+**v1.3**
+* Added *centerX* and *centerY* methods for just setting center point. 
+* Added *width_to* and *height_to* for configure height/width relatively specific view.
+
 **v1.1**
 * Added 'nui' prefix to relations(left, right etc). 
 * Added possibility to configure frame for special state.
