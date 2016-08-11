@@ -152,7 +152,7 @@ So easy to do it with Framer :
 
 ##States:
 
-It's very convenient use many states for animations, because you can just configure all states in one place and when needed change frame for view - just apply needed state! Awesome, is it?
+It's very convenient use many states for animations, because you can just configure all states in one place and when needed change frame for view - just apply needed state! Awesome, is'n it?
 ```obj-c
 
 - (void)viewDidLayoutSubviews {
