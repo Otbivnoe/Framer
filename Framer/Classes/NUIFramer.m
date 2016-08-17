@@ -49,7 +49,7 @@
 
 + (void)configurateView:(UIView *)view forState:(NSNumber *)state withInstallerBlock:(InstallerBlock)installerBlock {
 
-    if (view.nui_state == state) {
+    if (view.nui_state.integerValue == state.integerValue) {
         NUIFramer *framer = [[NUIFramer alloc] init];
         framer.view = view;
         
