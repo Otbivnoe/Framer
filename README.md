@@ -188,9 +188,17 @@ set new state and animate it:
         [self.view layoutIfNeeded];
     }];
 ```
+##Marcoses
 
+```obj-c
+    CGFloat widht = NUI_WIDTH(view);
+    CGFloat midX = NUI_MID_X(view);
+```
 
 ## Updates:
+**v1.4**
+* Added macroses for getting width, height etc.
+
 **v1.3**
 * Added *centerX* and *centerY* methods for just setting center point. 
 * Added *width_to* and *height_to* for configure height/width relatively specific view.
