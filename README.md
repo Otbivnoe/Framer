@@ -188,7 +188,7 @@ set new state and animate it:
         [self.view layoutIfNeeded];
     }];
 ```
-##Marcoses
+##Macroses:
 
 ```obj-c
     CGFloat widht = NUI_WIDTH(view);
