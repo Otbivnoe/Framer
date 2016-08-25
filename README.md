@@ -191,7 +191,7 @@ set new state and animate it:
 ##Macroses:
 
 ```obj-c
-    CGFloat widht = NUI_WIDTH(view);
+    CGFloat width = NUI_WIDTH(view);
     CGFloat midX = NUI_MID_X(view);
 ```
 
