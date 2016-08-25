@@ -209,7 +209,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "Framer_Example" */;
 			buildPhases = (
-				6FDA748D666B48D608B466AF /* 📦 Check Pods Manifest.lock */,
+				6FDA748D666B48D608B466AF /* [CP] Check Pods Manifest.lock */,
 				BCB666B143B79D5BF6C540AE /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
@@ -232,7 +232,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "Framer_Tests" */;
 			buildPhases = (
-				10361669778EFF9153642E38 /* 📦 Check Pods Manifest.lock */,
+				10361669778EFF9153642E38 /* [CP] Check Pods Manifest.lock */,
 				FA547DD875A17C36103632E8 /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
@@ -338,14 +338,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Framer_Example/Pods-Framer_Example-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		10361669778EFF9153642E38 /* 📦 Check Pods Manifest.lock */ = {
+		10361669778EFF9153642E38 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -398,14 +398,14 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Framer_Example/Pods-Framer_Example-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6FDA748D666B48D608B466AF /* 📦 Check Pods Manifest.lock */ = {
+		6FDA748D666B48D608B466AF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
 			);
-			name = "📦 Check Pods Manifest.lock";
+			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
