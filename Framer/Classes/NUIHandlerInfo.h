@@ -7,26 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
-
-typedef NS_ENUM(NSUInteger, NUIHandlerType) {
-    NUIHandlerTypeBottom,
-    NUIHandlerTypeTop,
-    NUIHandlerTypeLeft,
-    NUIHandlerTypeRight,
-    NUIHandlerTypeWidth,
-    NUIHandlerTypeHeight
-};
+#import "UIView+NUIAdditions.h"
 
 @interface NUIHandlerInfo : NSObject
 
-@property (nonatomic, readonly) NUIHandlerType handlerType;
+@property (nonatomic, readonly) NUIRelationType handlerType;
 
 @property (nonatomic, nullable, readonly) id first;
 @property (nonatomic, nullable, readonly) id second;
 @property (nonatomic, nullable, readonly) id third;
 @property (nonatomic, nullable, readonly) id fourth;
 
-+ (nullable instancetype)infoWithType:(NUIHandlerType)type parameters:(id)first, ... NS_REQUIRES_NIL_TERMINATION;
++ (nullable instancetype)infoWithType:(NUIRelationType)type parameters:(nullable id)first, ... NS_REQUIRES_NIL_TERMINATION;
 
 @end
 

@@ -94,7 +94,7 @@
 
 #pragma mark - Helpers
 
-- (NUIHandlerInfo *)infoForType:(NUIHandlerType)type {
+- (NUIHandlerInfo *)infoForType:(NUIRelationType)type {
     
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"handlerType == %@", @(type)];
     return [self.handlerInfos filteredArrayUsingPredicate:predicate].firstObject;
@@ -127,7 +127,7 @@
 - (NUIFramer* (^)(CGFloat))width {
     
     return ^id(CGFloat width) {
-        [self setHighPriorityValue:width withType:NUIHandlerTypeWidth];
+        [self setHighPriorityValue:width withType:NUIRelationTypeWidth];
         return self;
     };
 }
@@ -144,15 +144,15 @@
             
             if (view != strongSelf.view) {
                 CGFloat width = [strongSelf sizeForView:view withRelationType:relationType] * multiplier;
-                [strongSelf setFrameValue:width type:NUIHandlerTypeWidth];
+                [strongSelf setFrameValue:width type:NUIRelationTypeWidth];
             } else {
-                NUIHandlerInfo *heightInfo = [strongSelf infoForType:NUIHandlerTypeHeight];
+                NUIHandlerInfo *heightInfo = [strongSelf infoForType:NUIRelationTypeHeight];
                 if (heightInfo) {
                     CGFloat width = [heightInfo.first floatValue];
-                    [strongSelf setFrameValue:width type:NUIHandlerTypeWidth];
+                    [strongSelf setFrameValue:width type:NUIRelationTypeWidth];
                 } else {
-                    NUIHandlerInfo *topInfo = [strongSelf infoForType:NUIHandlerTypeTop];
-                    NUIHandlerInfo *bottomInfo = [strongSelf infoForType:NUIHandlerTypeBottom];
+                    NUIHandlerInfo *topInfo = [strongSelf infoForType:NUIRelationTypeTop];
+                    NUIHandlerInfo *bottomInfo = [strongSelf infoForType:NUIRelationTypeBottom];
                     
                     if (topInfo && bottomInfo) {
                         UIView *topView = topInfo.first;
@@ -167,13 +167,13 @@
                         
                         CGFloat bottomViewY = [strongSelf valueForRelationType:bottomRelationType forView:bottomView] - bottomInset;
                         
-                        [strongSelf setFrameValue:(bottomViewY - topViewY)*multiplier type:NUIHandlerTypeWidth];
+                        [strongSelf setFrameValue:(bottomViewY - topViewY)*multiplier type:NUIRelationTypeWidth];
                     }
                 }
             }
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeWidth parameters:nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeWidth parameters:nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
@@ -182,7 +182,7 @@
 - (NUIFramer* (^)(CGFloat))height {
     
     return ^id(CGFloat height) {
-        [self setHighPriorityValue:height withType:NUIHandlerTypeHeight];
+        [self setHighPriorityValue:height withType:NUIRelationTypeHeight];
         return self;
     };
 }
@@ -199,15 +199,15 @@
             
             if (view != strongSelf.view) {
                 CGFloat height = [strongSelf sizeForView:view withRelationType:relationType] * multiplier;
-                [strongSelf setFrameValue:height type:NUIHandlerTypeHeight];
+                [strongSelf setFrameValue:height type:NUIRelationTypeHeight];
             } else {
-                NUIHandlerInfo *widthInfo = [strongSelf infoForType:NUIHandlerTypeWidth];
+                NUIHandlerInfo *widthInfo = [strongSelf infoForType:NUIRelationTypeWidth];
                 if (widthInfo) {
                     CGFloat height = [widthInfo.first floatValue];
-                    [strongSelf setFrameValue:height type:NUIHandlerTypeHeight];
+                    [strongSelf setFrameValue:height type:NUIRelationTypeHeight];
                 } else {
-                    NUIHandlerInfo *leftInfo = [strongSelf infoForType:NUIHandlerTypeLeft];
-                    NUIHandlerInfo *rightInfo = [strongSelf infoForType:NUIHandlerTypeRight];
+                    NUIHandlerInfo *leftInfo = [strongSelf infoForType:NUIRelationTypeLeft];
+                    NUIHandlerInfo *rightInfo = [strongSelf infoForType:NUIRelationTypeRight];
                     
                     if (leftInfo && rightInfo) {
                         UIView *leftView = leftInfo.first;
@@ -222,13 +222,13 @@
                         
                         CGFloat rightViewX = [strongSelf valueForRelationType:rightRelationType forView:rightView] - rightInset;
                         
-                        [strongSelf setFrameValue:(rightViewX - leftViewX)*multiplier type:NUIHandlerTypeHeight];
+                        [strongSelf setFrameValue:(rightViewX - leftViewX)*multiplier type:NUIRelationTypeHeight];
                     }
                 }
             }
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeHeight parameters:nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeHeight parameters:nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
@@ -244,7 +244,7 @@
     return 0;
 }
 
-- (void)setHighPriorityValue:(CGFloat)value withType:(NUIHandlerType)type {
+- (void)setHighPriorityValue:(CGFloat)value withType:(NUIRelationType)type {
     
     __weak typeof(self) weakSelf = self;
     
@@ -257,14 +257,14 @@
     [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
 }
 
-- (void)setFrameValue:(CGFloat)value type:(NUIHandlerType)type {
+- (void)setFrameValue:(CGFloat)value type:(NUIRelationType)type {
     
     CGRect frame = self.newRect;
     switch (type) {
-        case NUIHandlerTypeWidth:
+        case NUIRelationTypeWidth:
             frame.size.width = value;
             break;
-        case NUIHandlerTypeHeight:
+        case NUIRelationTypeHeight:
             frame.size.height = value;
             break;
         default:break;
@@ -297,7 +297,7 @@
             strongSelf.leftFrameInstalled = YES;
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeLeft parameters:view, @(inset), @(relationType), nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeLeft parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
@@ -334,7 +334,7 @@
             strongSelf.topFrameInstalled = YES;
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeTop parameters:view, @(inset), @(relationType), nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeTop parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
@@ -356,8 +356,8 @@
             frame = CGRectUnion(frame, subview.frame);
         }
 
-        [self setHighPriorityValue:CGRectGetWidth(frame) withType:NUIHandlerTypeWidth];
-        [self setHighPriorityValue:CGRectGetHeight(frame) withType:NUIHandlerTypeHeight];
+        [self setHighPriorityValue:CGRectGetWidth(frame) withType:NUIRelationTypeWidth];
+        [self setHighPriorityValue:CGRectGetHeight(frame) withType:NUIRelationTypeHeight];
         return self;
     };
 }
@@ -368,8 +368,8 @@
     
     return ^id() {
         [self.view sizeToFit];
-        [self setHighPriorityValue:CGRectGetWidth(self.view.frame) withType:NUIHandlerTypeWidth];
-        [self setHighPriorityValue:CGRectGetHeight(self.view.frame) withType:NUIHandlerTypeHeight];
+        [self setHighPriorityValue:CGRectGetWidth(self.view.frame) withType:NUIRelationTypeWidth];
+        [self setHighPriorityValue:CGRectGetHeight(self.view.frame) withType:NUIRelationTypeHeight];
         return self;
     };
 }
@@ -380,8 +380,8 @@
         CGSize fitSize = [self.view sizeThatFits:size];
         CGFloat width = MIN(size.width, fitSize.width);
         CGFloat height = MIN(size.height, fitSize.height);
-        [self setHighPriorityValue:width withType:NUIHandlerTypeWidth];
-        [self setHighPriorityValue:height withType:NUIHandlerTypeHeight];
+        [self setHighPriorityValue:width withType:NUIRelationTypeWidth];
+        [self setHighPriorityValue:height withType:NUIRelationTypeHeight];
         return self;
     };
 }
@@ -434,7 +434,7 @@
             strongSelf.newRect = frame;
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeBottom parameters:view, @(inset), @(relationType), nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeBottom parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
     };
@@ -480,7 +480,7 @@
             strongSelf.newRect = frame;
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIHandlerTypeRight parameters:view, @(inset), @(relationType), nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeRight parameters:view, @(inset), @(relationType), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityMiddle]];
         return self;
     };

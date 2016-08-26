@@ -11,13 +11,13 @@
 @interface NUIHandlerInfo ()
 
 @property (nonatomic) NSArray<__kindof NSObject *> *parameters;
-@property (nonatomic) NUIHandlerType handlerType;
+@property (nonatomic) NUIRelationType handlerType;
 
 @end
 
 @implementation NUIHandlerInfo
 
-+ (instancetype)infoWithType:(NUIHandlerType)type parameters:(id)first, ... NS_REQUIRES_NIL_TERMINATION {
++ (instancetype)infoWithType:(NUIRelationType)type parameters:(id)first, ... NS_REQUIRES_NIL_TERMINATION {
     
     NUIHandlerInfo *info = [[NUIHandlerInfo alloc] init];
     info.handlerType = type;
