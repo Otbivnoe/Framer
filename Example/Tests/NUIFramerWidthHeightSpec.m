@@ -127,6 +127,30 @@ describe(@"Framer", ^{
             
         });
         
+        it(@"height_to with another view and width_to to myself relations:", ^{
+            
+            [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                framer.super_centerX(0.0);
+                framer.super_centerY(0.0);
+                framer.height_to(mainView.nui_width, 0.5);
+                framer.width_to(testingView.nui_height, 0.5);
+            }];
+            
+            [[theValue(testingView.frame) should] equal:theValue(CGRectMake(187.5, 125, 125, 250))];
+        });
+        
+        it(@"width_to with another view and height_to to myself relations:", ^{
+            
+            [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                framer.super_centerX(0.0);
+                framer.super_centerY(0.0);
+                framer.width_to(mainView.nui_height, 0.5);
+                framer.height_to(testingView.nui_width, 0.5);
+            }];
+            
+            [[theValue(testingView.frame) should] equal:theValue(CGRectMake(125, 187.5, 250, 125))];
+        });
+        
     });
     
 });

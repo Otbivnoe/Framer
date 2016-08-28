@@ -14,7 +14,9 @@
  */
 typedef NS_ENUM(NSInteger, NUIRelationType) {
     NUIRelationTypeWidth,
+    NUIRelationTypeWidthTo,
     NUIRelationTypeHeight,
+    NUIRelationTypeHeightTo,
     NUIRelationTypeLeft,
     NUIRelationTypeRight,
     NUIRelationTypeTop,

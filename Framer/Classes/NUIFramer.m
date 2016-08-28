@@ -150,6 +150,17 @@
                 if (heightInfo) {
                     CGFloat width = [heightInfo.first floatValue];
                     [strongSelf setFrameValue:width type:NUIRelationTypeWidth];
+                    
+                } else if ([strongSelf infoForType:NUIRelationTypeHeightTo]) {
+                    NUIHandlerInfo *heightToInfo = [strongSelf infoForType:NUIRelationTypeHeightTo];
+                    
+                    UIView *tempRelationView = heightToInfo.first;
+                    CGFloat tempMultiplier = [heightToInfo.third floatValue];
+                    NUIRelationType relationType = [heightToInfo.second integerValue];
+                    
+                    CGFloat width = [strongSelf sizeForView:tempRelationView withRelationType:relationType] * (tempMultiplier*multiplier);
+                    [strongSelf setFrameValue:width type:NUIRelationTypeWidth];
+                    
                 } else {
                     NUIHandlerInfo *topInfo = [strongSelf infoForType:NUIRelationTypeTop];
                     NUIHandlerInfo *bottomInfo = [strongSelf infoForType:NUIRelationTypeBottom];
@@ -173,7 +184,7 @@
             }
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeWidth parameters:nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeWidthTo parameters:view, @(relationType), @(multiplier), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
@@ -205,6 +216,17 @@
                 if (widthInfo) {
                     CGFloat height = [widthInfo.first floatValue];
                     [strongSelf setFrameValue:height type:NUIRelationTypeHeight];
+                    
+                } else if ([strongSelf infoForType:NUIRelationTypeWidthTo]) {
+                    NUIHandlerInfo *widthToInfo = [strongSelf infoForType:NUIRelationTypeWidthTo];
+                    
+                    UIView *tempRelationView = widthToInfo.first;
+                    CGFloat tempMultiplier = [widthToInfo.third floatValue];
+                    NUIRelationType relationType = [widthToInfo.second integerValue];
+                    
+                    CGFloat height = [strongSelf sizeForView:tempRelationView withRelationType:relationType] * (tempMultiplier*multiplier);
+                    [strongSelf setFrameValue:height type:NUIRelationTypeHeight];
+                    
                 } else {
                     NUIHandlerInfo *leftInfo = [strongSelf infoForType:NUIRelationTypeLeft];
                     NUIHandlerInfo *rightInfo = [strongSelf infoForType:NUIRelationTypeRight];
@@ -228,7 +250,7 @@
             }
         };
         
-        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeHeight parameters:nil]];
+        [self.handlerInfos addObject:[NUIHandlerInfo infoWithType:NUIRelationTypeHeightTo parameters:view, @(relationType), @(multiplier), nil]];
         [self.handlers addObject:[NUIHandler handlerWithBlock:handler priority:NUIHandlerPriorityHigh]];
         return self;
     };
