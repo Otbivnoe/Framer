@@ -1,5 +1,5 @@
 PODS:
-  - Framer (1.4.1)
+  - Framer (1.4.2)
   - Kiwi (2.4.0)
 
 DEPENDENCIES:
@@ -8,10 +8,10 @@ DEPENDENCIES:
 
 EXTERNAL SOURCES:
   Framer:
-    :path: "../"
+    :path: ../
 
 SPEC CHECKSUMS:
-  Framer: aecbdb9a549b7a7a46994537797a2043e227a701
+  Framer: cc40a9367c3b06a867a14ff761f46bcd42988201
   Kiwi: f49c9d54b28917df5928fe44968a39ed198cb8a8
 
 PODFILE CHECKSUM: 2ffd542d4d675ad907375d57aa035f8c760b029d
