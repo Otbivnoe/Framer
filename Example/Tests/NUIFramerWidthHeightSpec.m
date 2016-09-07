@@ -92,6 +92,16 @@ describe(@"Framer", ^{
                 
                 [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 10, 240, 480))];
             });
+            
+            it(@"to self height", ^{
+                
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.height(100);
+                    framer.width_to(testingView.nui_height, 0.5);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 50, 100))];
+            });
         });
         
         context(@"height_to relations:", ^{
@@ -123,6 +133,16 @@ describe(@"Framer", ^{
                 }];
                 
                 [[theValue(testingView.frame) should] equal:theValue(CGRectMake(10, 0, 130, 65))];
+            });
+            
+            it(@"to self width", ^{
+                
+                [testingView installFrames:^(NUIFramer * _Nonnull framer) {
+                    framer.width(100);
+                    framer.height_to(testingView.nui_width, 0.5);
+                }];
+                
+                [[theValue(testingView.frame) should] equal:theValue(CGRectMake(0, 0, 100, 50))];
             });
             
         });

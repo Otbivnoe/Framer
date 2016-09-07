@@ -149,7 +149,7 @@
                 NUIHandlerInfo *heightInfo = [strongSelf infoForType:NUIRelationTypeHeight];
                 if (heightInfo) {
                     CGFloat width = [heightInfo.first floatValue];
-                    [strongSelf setFrameValue:width type:NUIRelationTypeWidth];
+                    [strongSelf setFrameValue:width*multiplier type:NUIRelationTypeWidth];
                     
                 } else if ([strongSelf infoForType:NUIRelationTypeHeightTo]) {
                     NUIHandlerInfo *heightToInfo = [strongSelf infoForType:NUIRelationTypeHeightTo];
@@ -215,7 +215,7 @@
                 NUIHandlerInfo *widthInfo = [strongSelf infoForType:NUIRelationTypeWidth];
                 if (widthInfo) {
                     CGFloat height = [widthInfo.first floatValue];
-                    [strongSelf setFrameValue:height type:NUIRelationTypeHeight];
+                    [strongSelf setFrameValue:height*multiplier type:NUIRelationTypeHeight];
                     
                 } else if ([strongSelf infoForType:NUIRelationTypeWidthTo]) {
                     NUIHandlerInfo *widthToInfo = [strongSelf infoForType:NUIRelationTypeWidthTo];
