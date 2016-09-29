@@ -7,6 +7,8 @@
 
 Framer is a great layout framework which wraps manually calculation frames with a nice-chaining syntax.
 
+It's also available for *Swift* but with another name -  [Framezilla](https://github.com/Otbivnoe/Framezilla)
+
 **Framer is actively maintained.**
 
 ## Installation with CocoaPods
