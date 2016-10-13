@@ -22,21 +22,49 @@ NS_ASSUME_NONNULL_BEGIN
 - (NUIFramer *)and;
 
 /**
- *  Relations for settings custom width and height.
+ *  Relation for settings custom width.
  */
 - (NUIFramer *(^)(CGFloat width))width;
+
+/**
+ *  Relation for settings custom height.
+ */
 - (NUIFramer *(^)(CGFloat height))height;
 
+/**
+ *  Relation for settings custom width with some multiplier.
+ *  @param multiplier Additional multiplier configuration.
+ */
 - (NUIFramer *(^)(UIView *view, CGFloat multiplier))width_to;
+
+/**
+ *  Relation for settings custom height with some multiplier.
+ *  @param multiplier Additional multiplier configuration.
+ */
 - (NUIFramer *(^)(UIView *view, CGFloat multiplier))height_to;
 
 /**
- *  Edges relations relatively superview.
+ *  Left relation relatively superview.
  *  @param inset Additional inset between self.view and superview.
  */
 - (NUIFramer *(^)(CGFloat inset))left;
+
+/**
+ *  Top relation relatively superview.
+ *  @param inset Additional inset between self.view and superview.
+ */
 - (NUIFramer *(^)(CGFloat inset))top;
+
+/**
+ *  Bottom relation relatively superview.
+ *  @param inset Additional inset between self.view and superview.
+ */
 - (NUIFramer *(^)(CGFloat inset))bottom;
+
+/**
+ *  Right relation relatively superview.
+ *  @param inset Additional inset between self.view and superview.
+ */
 - (NUIFramer *(^)(CGFloat inset))right;
 
 /**
@@ -64,34 +92,67 @@ NS_ASSUME_NONNULL_BEGIN
 - (NUIFramer *(^)(CGSize size))sizeThatFits;
 
 /**
- *	Edges relations relatively other view. Possible to use these methods for superview.
- *  @param view  The view with which you want to add relations.
+ *	Left relation relatively other view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relation.
  *  @param inset Additional inset between self.view and other view.
  */
 - (NUIFramer *(^)(UIView *view, CGFloat inset))left_to;
+
+/**
+ *	Right relation relatively other view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relation.
+ *  @param inset Additional inset between self.view and other view.
+ */
 - (NUIFramer *(^)(UIView *view, CGFloat inset))right_to;
+
+/**
+ *	Top relation relatively other view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relation.
+ *  @param inset Additional inset between self.view and other view.
+ */
 - (NUIFramer *(^)(UIView *view, CGFloat inset))top_to;
+
+/**
+ *	Bottom relation relatively other view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relation.
+ *  @param inset Additional inset between self.view and other view.
+ */
 - (NUIFramer *(^)(UIView *view, CGFloat inset))bottom_to;
 
 /**
- *	Center relations with relatively view. Possible to use these methods for superview.
- *  @param view  The view with which you want to add relations.
+ *	CenterX relation with relatively view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relation.
  *  @param inset Additional inset between center of self.view and other view.
  */
 - (NUIFramer *(^)(UIView *view, CGFloat inset))centerX_to;
+
+/**
+ *	CenterY relation with relatively view. Possible to use these methods for superview.
+ *  @param view  The view with which you want to add relation.
+ *  @param inset Additional inset between center of self.view and other view.
+ */
 - (NUIFramer *(^)(UIView *view, CGFloat inset))centerY_to;
 
 /**
- *	Just set needed x and y for center.
+ *	Just set needed X for center point.
  */
 - (NUIFramer *(^)(CGFloat x))centerX;
+
+/**
+ *	Just set needed Y for center point.
+ */
 - (NUIFramer *(^)(CGFloat y))centerY;
 
 /**
- *	Center relations relatively superview.
- *  @param inset Additional inset between center of self.view and center of superview.
+ *	CenterX relation relatively superview.
+ *  @param inset Additional inset between centerX of self.view and centerX of superview.
  */
 - (NUIFramer *(^)(CGFloat inset))super_centerX;
+
+/**
+ *	CenterY relation relatively superview.
+ *  @param inset Additional inset between centerY of self.view and centerY of superview.
+ */
 - (NUIFramer *(^)(CGFloat inset))super_centerY;
 
 /**
