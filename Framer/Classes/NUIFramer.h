@@ -86,6 +86,16 @@ NS_ASSUME_NONNULL_BEGIN
 - (NUIFramer *(^)())sizeToFit;
 
 /**
+    Resizes and moves the receiver view so it just encloses its subviews only for width.
+ */
+- (NUIFramer *(^)())widthToFit;
+
+/**
+    Resizes and moves the receiver view so it just encloses its subviews only for height.
+ */
+- (NUIFramer *(^)())heightToFit;
+
+/**
     Calculate the size that best fits the specified size.
     @param size The size for best-fitting.
  */

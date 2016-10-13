@@ -396,6 +396,24 @@
     };
 }
 
+- (NUIFramer *(^)())widthToFit {
+    
+    return ^id() {
+        [self.view sizeToFit];
+        [self setHighPriorityValue:CGRectGetWidth(self.view.frame) withType:NUIRelationTypeWidth];
+        return self;
+    };
+}
+
+- (NUIFramer *(^)())heightToFit {
+    
+    return ^id() {
+        [self.view sizeToFit];
+        [self setHighPriorityValue:CGRectGetHeight(self.view.frame) withType:NUIRelationTypeHeight];
+        return self;
+    };
+}
+
 - (NUIFramer *(^)(CGSize size))sizeThatFits {
     
     return ^id(CGSize size) {
