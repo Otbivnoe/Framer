@@ -198,6 +198,10 @@ set new state and animate it:
 ```
 
 ## Updates:
+**v1.5**
+* Updated documentation.
+* Added `widthToFit` and `heightToFit`.
+
 **v1.4**
 * Added macroses for getting width, height etc.
 
