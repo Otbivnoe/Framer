@@ -1,6 +1,6 @@
 # Framer
 
-[![CI Status](http://img.shields.io/travis/Nikita Ermolenko/Framer.svg?style=flat)](https://travis-ci.org/Nikita Ermolenko/Framer)
+[![Build Status](https://travis-ci.org/Otbivnoe/Framer.svg?branch=master)](https://travis-ci.org/Otbivnoe/Framer)
 [![Version](https://img.shields.io/cocoapods/v/Framer.svg?style=flat)](http://cocoapods.org/pods/Framer)
 [![License](https://img.shields.io/cocoapods/l/Framer.svg?style=flat)](http://cocoapods.org/pods/Framer)
 [![Platform](https://img.shields.io/cocoapods/p/Framer.svg?style=flat)](http://cocoapods.org/pods/Framer)
@@ -31,7 +31,7 @@ then add
 ```
 # USAGE
 
-##You can configure relations with superview very fast and convenient:
+## You can configure relations with superview very fast and convenient:
 
 ```obj-c
     [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
@@ -63,7 +63,7 @@ So easy to do it with Framer :
 
 
 
-##Relation between two views:
+## Relation between two views:
 
 ![alt Framer](http://i.imgur.com/RoQdI3L.png)
 
@@ -100,17 +100,17 @@ So easy to do it with Framer :
     }];
 ```
 
-#NOTE
+# NOTE
 **That's important to point out relations for two views.**
 
-####Incorrect:
+#### Incorrect:
 
 ```obj-c
     [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
         framer.bottom_to(self.view1, 0);
     }];
 ```
-####Correct:
+#### Correct:
 
 ```obj-c
     [self.view1 installFrames:^(NUIFramer * _Nonnull framer) {
@@ -121,11 +121,11 @@ So easy to do it with Framer :
 
 
 
-##Container relation:
+## Container relation:
 
 ![alt Framer](http://i.imgur.com/18vDfn1.png)
 
-#NOTE
+# NOTE
 **At first you should configurate all subviews and then configure container.**
 
 ```obj-c
@@ -152,7 +152,7 @@ So easy to do it with Framer :
     }];
 ```
 
-##States:
+## States:
 
 It's very convenient use many states for animations, because you can just configure all states in one place and when needed change frame for view - just apply needed state! Awesome, is'n it?
 ```obj-c
@@ -190,7 +190,7 @@ set new state and animate it:
         [self.view layoutIfNeeded];
     }];
 ```
-##Macroses:
+## Macroses:
 
 ```obj-c
     CGFloat width = NUI_WIDTH(view);
