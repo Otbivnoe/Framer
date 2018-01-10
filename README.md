@@ -9,8 +9,6 @@ Framer is a great layout framework which wraps manually calculation frames with 
 
 It's also available for *Swift* but with another name -  [Framezilla](https://github.com/Otbivnoe/Framezilla)
 
-**Framer is actively maintained.**
-
 ## Installation with CocoaPods
 
 [CocoaPods](http://cocoapods.org) is a dependency manager for Swift and Objective-C Cocoa projects. It has over eighteen thousand libraries and can help you scale your projects elegantly. You can install it with the following command:
